@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <eu.faircode.email.ViewStripe
+        android:id="@+id/vwColor"
+        android:layout_width="6dp"
+        android:layout_height="0dp"
+        android:background="?attr/colorAccent"
+        app:layout_constraintBottom_toBottomOf="@+id/paddingBottom"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/paddingTop"
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/ibExpander"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_marginStart="6dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/paddingBottom"
+        app:layout_constraintStart_toEndOf="@id/vwColor"
+        app:layout_constraintTop_toTopOf="@id/paddingTop"
+        app:srcCompat="@drawable/expander" />
+
+    <View
+        android:id="@+id/paddingStart"
+        android:layout_width="6dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toEndOf="@+id/ibExpander"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/ibAvatar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="6dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/title_legend_avatar"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@+id/tvFolder"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toEndOf="@id/paddingStart"
+        app:layout_constraintTop_toBottomOf="@id/paddingTop"
+        app:srcCompat="@drawable/baseline_person_24" />
+
+    <ImageButton
+        android:id="@+id/ibAuth"
+        android:layout_width="21dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="6dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/title_legend_auth"
+        android:tint="?attr/colorWarning"
+        app:layout_constraintBottom_toBottomOf="@+id/tvFrom"
+        app:layout_constraintStart_toEndOf="@id/ibAvatar"
+        app:layout_constraintTop_toTopOf="@+id/tvFrom"
+        app:srcCompat="@drawable/baseline_flag_24" />
+
+    <ImageView
+        android:id="@+id/ivPriorityHigh"
+        android:layout_width="21dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="6dp"
+        android:contentDescription="@string/title_legend_priority"
+        android:tint="?attr/colorWarning"
+        app:layout_constraintBottom_toBottomOf="@+id/tvFrom"
+        app:layout_constraintStart_toEndOf="@id/ibAuth"
+        app:layout_constraintTop_toTopOf="@+id/tvFrom"
+        app:srcCompat="@drawable/baseline_priority_high_24" />
+
+    <ImageView
+        android:id="@+id/ivPriorityLow"
+        android:layout_width="21dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="6dp"
+        android:contentDescription="@string/title_legend_priority_low"
+        app:layout_constraintBottom_toBottomOf="@+id/tvFrom"
+        app:layout_constraintStart_toEndOf="@id/ivPriorityHigh"
+        app:layout_constraintTop_toTopOf="@+id/tvFrom"
+        app:srcCompat="@drawable/baseline_low_priority_24" />
+
+    <ImageView
+        android:id="@+id/ivImportance"
+        android:layout_width="21dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="6dp"
+        android:contentDescription="@string/title_legend_priority_low"
+        app:layout_constraintBottom_toBottomOf="@+id/tvFrom"
+        app:layout_constraintStart_toEndOf="@id/ivPriorityLow"
+        app:layout_constraintTop_toTopOf="@+id/tvFrom"
+        app:srcCompat="@drawable/importance" />
+
+    <ImageView
+        android:id="@+id/ivSigned"
+        android:layout_width="21dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="6dp"
+        android:contentDescription="@string/title_legend_signed"
+        app:layout_constraintBottom_toBottomOf="@+id/tvFrom"
+        app:layout_constraintStart_toEndOf="@id/ivImportance"
+        app:layout_constraintTop_toTopOf="@+id/tvFrom"
+        app:srcCompat="@drawable/baseline_gesture_24" />
+
+    <ImageView
+        android:id="@+id/ivEncrypted"
+        android:layout_width="21dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="6dp"
+        android:contentDescription="@string/title_legend_encrypted"
+        app:layout_constraintBottom_toBottomOf="@+id/tvFrom"
+        app:layout_constraintStart_toEndOf="@id/ivSigned"
+        app:layout_constraintTop_toTopOf="@+id/tvFrom"
+        app:srcCompat="@drawable/baseline_lock_24" />
+
+    <eu.faircode.email.FixedTextView
+        android:id="@+id/tvFrom"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="6dp"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:minHeight="24dp"
+        android:singleLine="true"
+        android:text="From"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintEnd_toStartOf="@+id/tvSize"
+        app:layout_constraintStart_toEndOf="@id/ivEncrypted"
+        app:layout_constraintTop_toBottomOf="@id/paddingTop" />
+
+    <eu.faircode.email.FixedTextView
+        android:id="@+id/tvSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="6dp"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:text="123 KB"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintBottom_toBottomOf="@+id/tvFrom"
+        app:layout_constraintEnd_toStartOf="@+id/tvTime"
+        app:layout_constraintTop_toBottomOf="@id/paddingTop" />
+
+    <eu.faircode.email.FixedTextView
+        android:id="@+id/tvTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="6dp"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:text="Time"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintBottom_toBottomOf="@+id/tvFrom"
+        app:layout_constraintEnd_toStartOf="@+id/ibFlagged"
+        app:layout_constraintTop_toBottomOf="@id/paddingTop" />
+
+    <ImageView
+        android:id="@+id/ivType"
+        android:layout_width="21dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="6dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvSubject"
+        app:layout_constraintStart_toEndOf="@id/ibAvatar"
+        app:layout_constraintTop_toTopOf="@+id/tvSubject"
+        app:srcCompat="@drawable/baseline_edit_24" />
+
+    <ImageView
+        android:id="@+id/ivFound"
+        android:layout_width="21dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="6dp"
+        android:contentDescription="@string/title_legend_found"
+        app:layout_constraintBottom_toBottomOf="@+id/tvSubject"
+        app:layout_constraintStart_toEndOf="@id/ivType"
+        app:layout_constraintTop_toTopOf="@+id/tvSubject"
+        app:srcCompat="@drawable/baseline_search_24" />
+
+    <ImageButton
+        android:id="@+id/ibSnoozed"
+        android:layout_width="21dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="6dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/title_legend_snoozed"
+        app:layout_constraintBottom_toBottomOf="@+id/tvSubject"
+        app:layout_constraintStart_toEndOf="@id/ivFound"
+        app:layout_constraintTop_toTopOf="@+id/tvSubject"
+        app:srcCompat="@drawable/baseline_timelapse_24" />
+
+    <ImageView
+        android:id="@+id/ivAnswered"
+        android:layout_width="21dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="6dp"
+        android:contentDescription="@string/title_legend_answered"
+        app:layout_constraintBottom_toBottomOf="@+id/tvSubject"
+        app:layout_constraintStart_toEndOf="@id/ibSnoozed"
+        app:layout_constraintTop_toTopOf="@+id/tvSubject"
+        app:srcCompat="@drawable/baseline_reply_24" />
+
+    <ImageView
+        android:id="@+id/ivForwarded"
+        android:layout_width="21dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="6dp"
+        android:contentDescription="@string/title_legend_answered"
+        app:layout_constraintBottom_toBottomOf="@+id/tvSubject"
+        app:layout_constraintStart_toEndOf="@id/ivAnswered"
+        app:layout_constraintTop_toTopOf="@+id/tvSubject"
+        app:srcCompat="@drawable/baseline_forwarded_24" />
+
+    <ImageView
+        android:id="@+id/ivAttachments"
+        android:layout_width="21dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="6dp"
+        android:contentDescription="@string/title_legend_attachment"
+        app:layout_constraintBottom_toBottomOf="@+id/tvSubject"
+        app:layout_constraintStart_toEndOf="@id/ivForwarded"
+        app:layout_constraintTop_toTopOf="@+id/tvSubject"
+        app:srcCompat="@drawable/baseline_attachment_24" />
+
+    <eu.faircode.email.FixedTextView
+        android:id="@+id/tvSubject"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="6dp"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:minHeight="21dp"
+        android:singleLine="true"
+        android:text="Subject"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintEnd_toStartOf="@+id/tvCount"
+        app:layout_constraintStart_toEndOf="@id/ivAttachments"
+        app:layout_constraintTop_toBottomOf="@id/tvFrom" />
+
+    <eu.faircode.email.FixedTextView
+        android:id="@+id/tvCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="3dp"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:text="3"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintBottom_toBottomOf="@id/tvSubject"
+        app:layout_constraintEnd_toStartOf="@+id/ivThread"
+        app:layout_constraintTop_toTopOf="@+id/tvSubject" />
+
+    <ImageView
+        android:id="@+id/ivThread"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginEnd="6dp"
+        app:layout_constraintBottom_toBottomOf="@id/tvSubject"
+        app:layout_constraintEnd_toStartOf="@+id/ibFlagged"
+        app:layout_constraintTop_toTopOf="@+id/tvSubject"
+        app:srcCompat="@drawable/baseline_message_24" />
+
+    <ImageButton
+        android:id="@+id/ibFlagged"
+        android:layout_width="24dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="6dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/tvFolder"
+        app:layout_constraintEnd_toStartOf="@id/paddingEnd"
+        app:layout_constraintTop_toBottomOf="@id/paddingTop"
+        app:srcCompat="@drawable/baseline_star_24" />
+
+    <eu.faircode.email.FixedTextView
+        android:id="@+id/tvKeywords"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="6dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="tag1, tag2, tag3"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintEnd_toStartOf="@+id/ibFlagged"
+        app:layout_constraintStart_toEndOf="@id/ibAvatar"
+        app:layout_constraintTop_toBottomOf="@id/tvSubject" />
+
+    <eu.faircode.email.FixedTextView
+        android:id="@+id/tvFolder"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="6dp"
+        android:ellipsize="end"
+        android:gravity="end"
+        android:singleLine="true"
+        android:text="Folder"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintEnd_toStartOf="@+id/ibFlagged"
+        app:layout_constraintStart_toEndOf="@id/ibAvatar"
+        app:layout_constraintTop_toBottomOf="@id/tvKeywords" />
+
+    <eu.faircode.email.FixedTextView
+        android:id="@+id/tvLabels"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="6dp"
+        android:text="label1,label2,label3"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintEnd_toStartOf="@+id/paddingEnd"
+        app:layout_constraintStart_toEndOf="@id/paddingStart"
+        app:layout_constraintTop_toBottomOf="@id/tvFolder" />
+
+    <eu.faircode.email.FixedTextView
+        android:id="@+id/tvExpand"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="6dp"
+        android:gravity="center_horizontal"
+        android:text="@string/title_expand_warning"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/paddingEnd"
+        app:layout_constraintStart_toEndOf="@id/paddingStart"
+        app:layout_constraintTop_toBottomOf="@id/tvLabels" />
+
+    <eu.faircode.email.FixedTextView
+        android:id="@+id/tvPreview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="6dp"
+        android:ellipsize="end"
+        android:fontFamily="monospace"
+        android:text="Preview"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toStartOf="@+id/paddingEnd"
+        app:layout_constraintStart_toEndOf="@id/paddingStart"
+        app:layout_constraintTop_toBottomOf="@id/tvExpand" />
+
+    <eu.faircode.email.FixedTextView
+        android:id="@+id/tvError"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="6dp"
+        android:gravity="center_vertical"
+        android:minHeight="24dp"
+        android:text="error"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="?attr/colorWarning"
+        android:textIsSelectable="true"
+        app:layout_constraintEnd_toStartOf="@+id/ibHelp"
+        app:layout_constraintStart_toEndOf="@id/paddingStart"
+        app:layout_constraintTop_toBottomOf="@id/tvPreview" />
+
+    <ImageButton
+        android:id="@+id/ibHelp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="6dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:tint="?attr/colorWarning"
+        app:layout_constraintEnd_toStartOf="@+id/paddingEnd"
+        app:layout_constraintTop_toTopOf="@id/tvError"
+        app:srcCompat="@drawable/baseline_info_24" />
+
+    <View
+        android:id="@+id/paddingEnd"
+        android:layout_width="6dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/paddingBottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/paddingBottom"
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvError" />
+</androidx.constraintlayout.widget.ConstraintLayout>

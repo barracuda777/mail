@@ -1,0 +1,403 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.bugsnag.android.gradle'
+
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+android {
+    compileSdkVersion 30
+
+    defaultConfig {
+        applicationId "eu.faircode.email"
+        minSdkVersion 21
+        targetSdkVersion 30
+        versionCode 1294
+        versionName "1.1294"
+        archivesBaseName = "FairEmail-v$versionName"
+
+        // https://en.wikipedia.org/wiki/List_of_dinosaur_genera
+        buildConfigField "String", "RELEASE_NAME", "\"Oohkotokia\""
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+
+        // https://developer.android.com/guide/topics/graphics/vector-drawable-resources
+        vectorDrawables.useSupportLibrary = true
+
+        //ndkVersion "21.0.6113669"
+        ndk {
+            // Bugsnag, sqlite
+            abiFilters "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
+        }
+    }
+
+    android {
+        buildFeatures {
+            buildFeatures {
+                buildConfig = true
+                viewBinding = false
+                dataBinding = false
+                aidl = true
+                renderScript = false
+                resValues = false
+                shaders = false
+            }
+        }
+
+        sourceSets {
+            github {
+                java.srcDirs = ['src/main/java', 'src/play/java']
+            }
+            fdroid {
+                java.srcDirs = ['src/main/java', 'src/fdroid/java']
+            }
+            play {
+                java.srcDirs = ['src/main/java', 'src/play/java']
+            }
+            main.res.srcDirs += 'src/main/resExtra'
+        }
+    }
+
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = false
+    }
+
+    lintOptions {
+        disable 'MissingTranslation'
+        abortOnError false
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    packagingOptions {
+        exclude 'LICENSES'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/README.md'
+        exclude 'META-INF/CHANGES'
+        exclude 'META-INF/jersey-module-version'
+        exclude 'META-INF/COPYRIGHT.html'
+        exclude 'META-INF/LICENSE.gpl.txt'
+        exclude 'META-INF/LICENSE.commercial.txt'
+    }
+
+    signingConfigs {
+        release {
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+        }
+        v1 {
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            v1SigningEnabled true
+            v2SigningEnabled false
+            v2SigningEnabled false
+        }
+    }
+
+    buildTypes {
+        release {
+            debuggable = false
+            minifyEnabled = true
+            useProguard = true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            applicationIdSuffix '.debug'
+            debuggable = true
+            minifyEnabled = false
+            useProguard = false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions "all"
+
+    productFlavors {
+        github {
+            dimension "all"
+            buildConfigField "boolean", "BETA_RELEASE", "true"
+            buildConfigField "boolean", "PLAY_STORE_RELEASE", "false"
+            buildConfigField "String", "PRO_FEATURES_URI", "\"https://email.faircode.eu/donate/\""
+            buildConfigField "String", "CHANGELOG", "\"https://github.com/M66B/FairEmail/releases/\""
+            buildConfigField "String", "GITHUB_LATEST_API", "\"https://api.github.com/repos/M66B/open-source-email/releases/latest\""
+        }
+        fdroid {
+            dimension "all"
+            buildConfigField "boolean", "BETA_RELEASE", "true"
+            buildConfigField "boolean", "PLAY_STORE_RELEASE", "false"
+            buildConfigField "String", "PRO_FEATURES_URI", "\"https://email.faircode.eu/donate/\""
+            buildConfigField "String", "CHANGELOG", "\"https://github.com/M66B/FairEmail/releases/\""
+            buildConfigField "String", "GITHUB_LATEST_API", "\"https://api.github.com/repos/M66B/open-source-email/releases/latest\""
+        }
+        play {
+            dimension "all"
+            //minSdkVersion 23
+            buildConfigField "boolean", "BETA_RELEASE", "true"
+            buildConfigField "boolean", "PLAY_STORE_RELEASE", "true"
+            buildConfigField "String", "PRO_FEATURES_URI", "\"https://email.faircode.eu/#pro\""
+            buildConfigField "String", "CHANGELOG", "\"\""
+            buildConfigField "String", "GITHUB_LATEST_API", "\"\""
+        }
+    }
+
+    variantFilter { variant ->
+        def flavors = variant.flavors*.name
+        // Builds: release, debug
+        // Flavors: github, fdroid, play
+        if (variant.buildType.name == "debug" &&
+                (flavors.contains("fdroid") || flavors.contains("play"))) {
+            setIgnore(true)
+        }
+    }
+
+    bugsnag {
+        // https://docs.bugsnag.com/build-integrations/gradle/
+        apiKey "9d2d57476a0614974449a3ec33f2604a"
+        builderName "M66B"
+        autoUpload false
+        autoReportBuilds false
+        sourceControl {
+            repository "https://github.com/M66B/FairEmail/"
+        }
+    }
+}
+
+task copyMarkdown(type: Copy) {
+    from "${rootDir}"
+    into "src/main/assets"
+    include "SETUP.md"
+    include "PRIVACY.md"
+    include "ATTRIBUTION.md"
+}
+preBuild.dependsOn copyMarkdown
+
+repositories {
+    google()
+    jcenter()
+    maven { url "https://repo1.maven.org/maven2/" }
+    maven { url "https://jitpack.io" }
+    //maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+    //maven { url "https://jakarta.oss.sonatype.org/content/repositories/snapshots/" }
+}
+
+configurations.all {
+    // Workaround https://issuetracker.google.com/issues/138441698
+    // Support @69c481c39a17d4e1e44a4eb298bb81c48f226eef
+    exclude group: "androidx.room", module: "room-runtime"
+    // Workaround https://issuetracker.google.com/issues/134685570
+    exclude group: "androidx.lifecycle", module: "lifecycle-livedata"
+    exclude group: "androidx.lifecycle", module: "lifecycle-livedata-core"
+
+    // lifecycle-livedata: ComputableLiveData, MediatorLiveData, Transformations
+    // lifecycle-livedata-core: LiveData, MutableLiveData, Observer
+    // paging-runtime: AsyncPagedListDiffer, LivePagedListBuilder, PagedListAdapter, PagedStorageDiffHelper
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    def core_version = "1.5.0-alpha01"
+    def appcompat_version = "1.3.0-alpha01"
+    def fragment_version = "1.3.0-alpha07"
+    def recyclerview_version = "1.2.0-alpha05"
+    def coordinatorlayout_version = "1.1.0"
+    def constraintlayout_version = "2.0.0-beta3" // 2.0.0-beta8
+    def material_version = "1.3.0-alpha01" // 1.3.0-alpha02
+    def browser_version = "1.3.0-alpha04"
+    def lbm_version = "1.0.0"
+    def swiperefresh_version = "1.2.0-alpha01"
+    def documentfile_version = "1.0.1"
+    def lifecycle_version = "2.2.0" // 2.3.0-alpha06
+    def sqlite_version = "2.1.0"
+    def room_version = "2.2.5" // 2.3.0-alpha02
+    def paging_version = "2.1.2" // 3.0.0-alpha03
+    def preference_version = "1.1.1"
+    def work_version = "2.4.0"
+    def exif_version = "1.3.0-alpha01"
+    def biometric_version = "1.0.1" // https://issuetracker.google.com/issues/159983244
+    def textclassifier_version = "1.0.0-alpha03"
+    def billingclient_version = "3.0.0"
+    def javamail_version = "1.6.5"
+    def jsoup_version = "1.13.1"
+    def css_version = "0.9.27"
+    def jax_version = "2.3.0-jaxb-1.0.6"
+    def dnsjava_version = "2.1.9"
+    def openpgp_version = "12.0"
+    def requery_version = "3.31.0"
+    def badge_version = "1.1.22"
+    def bugsnag_version = "5.0.0"
+    def biweekly_version = "0.6.3"
+    def relinker_version = "1.3.1"
+    def markwon_version = "4.4.0"
+    def bouncycastle_version = "1.66"
+    def colorpicker_version = "0.0.15"
+    def overscroll_version = "1.1.0"
+    def appauth_version = "0.7.1"
+    def jcharset_version = "2.1"
+
+    // https://developer.android.com/jetpack/androidx/releases/
+
+    // https://mvnrepository.com/artifact/androidx.core/core
+    implementation "androidx.core:core:$core_version"
+
+    // https://mvnrepository.com/artifact/androidx.appcompat/appcompat
+    // https://mvnrepository.com/artifact/androidx.fragment/fragment
+    implementation "androidx.appcompat:appcompat:$appcompat_version"
+    implementation "androidx.fragment:fragment:$fragment_version"
+
+    // https://mvnrepository.com/artifact/androidx.viewpager2/viewpager2
+    //implementation "androidx.viewpager2:viewpager2:1.1.0-alpha01"
+
+    // https://mvnrepository.com/artifact/androidx.recyclerview/recyclerview
+    // https://mvnrepository.com/artifact/androidx.recyclerview/recyclerview-selection
+    implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
+    //implementation "androidx.recyclerview:recyclerview-selection:1.1.0-rc01"
+
+    // https://mvnrepository.com/artifact/androidx.coordinatorlayout/coordinatorlayout
+    implementation "androidx.coordinatorlayout:coordinatorlayout:$coordinatorlayout_version"
+
+    // https://mvnrepository.com/artifact/androidx.constraintlayout/constraintlayout
+    implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
+
+    // https://mvnrepository.com/artifact/com.google.android.material/material
+    // https://github.com/material-components/material-components-android/releases
+    implementation "com.google.android.material:material:$material_version"
+
+    // https://mvnrepository.com/artifact/androidx.browser/browser
+    implementation "androidx.browser:browser:$browser_version"
+
+    // https://mvnrepository.com/artifact/androidx.localbroadcastmanager/localbroadcastmanager
+    implementation "androidx.localbroadcastmanager:localbroadcastmanager:$lbm_version"
+
+    // https://mvnrepository.com/artifact/androidx.swiperefreshlayout/swiperefreshlayout
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swiperefresh_version"
+
+    // https://mvnrepository.com/artifact/androidx.documentfile/documentfile
+    implementation "androidx.documentfile:documentfile:$documentfile_version"
+
+    // https://mvnrepository.com/artifact/androidx.lifecycle/lifecycle-runtime
+    // https://mvnrepository.com/artifact/androidx.lifecycle/lifecycle-livedata
+    // https://mvnrepository.com/artifact/androidx.lifecycle/lifecycle-livedata-core
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+
+    // https://mvnrepository.com/artifact/androidx.room/room-runtime
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-common:$room_version" // because of exclude
+    // https://mvnrepository.com/artifact/androidx.sqlite/sqlite-framework
+    implementation "androidx.sqlite:sqlite-framework:$sqlite_version" // because of exclude
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
+    // https://mvnrepository.com/artifact/androidx.paging/paging-runtime
+    // https://developer.android.com/jetpack/androidx/releases/paging
+    //implementation "androidx.paging:paging-runtime:$paging_version"
+
+    // https://mvnrepository.com/artifact/androidx.preference/preference
+    implementation "androidx.preference:preference:$preference_version"
+
+    // https://mvnrepository.com/artifact/androidx.work/work-runtime
+    implementation "androidx.work:work-runtime:$work_version"
+
+    // https://mvnrepository.com/artifact/androidx.exifinterface/exifinterface
+    implementation "androidx.exifinterface:exifinterface:$exif_version"
+
+    // https://mvnrepository.com/artifact/androidx.biometric/biometric
+    // https://developer.android.com/jetpack/androidx/releases/biometric
+    implementation "androidx.biometric:biometric:$biometric_version"
+
+    // https://mvnrepository.com/artifact/androidx.textclassifier/textclassifier
+    // https://developer.android.com/jetpack/androidx/releases/textclassifier
+    //implementation "androidx.textclassifier:textclassifier:$textclassifier_version"
+
+    // https://developer.android.com/google/play/billing/billing_library_releases_notes
+    // https://android-developers.googleblog.com/2020/06/meet-google-play-billing-library.html
+    githubImplementation "com.android.billingclient:billing:$billingclient_version"
+    playImplementation "com.android.billingclient:billing:$billingclient_version"
+
+    // https://javaee.github.io/javamail/
+    // https://projects.eclipse.org/projects/ee4j.javamail
+    // https://mvnrepository.com/artifact/com.sun.mail
+    //implementation "com.sun.mail:android-mail:$javamail_version"
+    //implementation "com.sun.mail:android-activation:$javamail_version"
+
+    // https://jsoup.org/news/
+    // https://mvnrepository.com/artifact/org.jsoup/jsoup
+    implementation "org.jsoup:jsoup:$jsoup_version"
+
+    // http://cssparser.sourceforge.net/
+    // https://mvnrepository.com/artifact/net.sourceforge.cssparser/cssparser
+    implementation "net.sourceforge.cssparser:cssparser:$css_version"
+
+    // https://github.com/eclipse-ee4j/jaxb-ri
+    // https://mvnrepository.com/artifact/org.w3c/dom
+    implementation "org.w3c:dom:$jax_version"
+
+    // http://www.dnsjava.org/
+    // https://mvnrepository.com/artifact/dnsjava/dnsjava
+    implementation "dnsjava:dnsjava:$dnsjava_version"
+
+    // https://github.com/open-keychain/openpgp-api
+    // https://mvnrepository.com/artifact/org.sufficientlysecure/openpgp-api
+    //implementation "org.sufficientlysecure:openpgp-api:$openpgp_version"
+    implementation project(':openpgp-api')
+
+    // https://www.sqlite.org/changes.html
+    // https://github.com/requery/sqlite-android/
+    // https://mvnrepository.com/artifact/io.requery/sqlite-android?repo=jcenter
+    implementation "io.requery:sqlite-android:$requery_version"
+
+    // https://github.com/leolin310148/ShortcutBadger
+    // https://mvnrepository.com/artifact/me.leolin/ShortcutBadger
+    implementation "me.leolin:ShortcutBadger:$badge_version"
+
+    // https://github.com/bugsnag/bugsnag-android
+    implementation("com.bugsnag:bugsnag-android:$bugsnag_version") {
+        exclude group: "com.bugsnag", module: "bugsnag-plugin-android-anr"
+        exclude group: "com.bugsnag", module: "bugsnag-plugin-android-ndk"
+    }
+
+    // https://github.com/mangstadt/biweekly
+    implementation("net.sf.biweekly:biweekly:$biweekly_version") {
+        exclude group: 'com.fasterxml.jackson.core', module: 'jackson-core'
+    }
+
+    // https://github.com/KeepSafe/ReLinker
+    // https://mvnrepository.com/artifact/com.getkeepsafe.relinker/relinker?repo=jcenter
+    implementation "com.getkeepsafe.relinker:relinker:$relinker_version"
+
+    // https://github.com/noties/Markwon
+    implementation "io.noties.markwon:core:$markwon_version"
+
+    // // https://github.com/QuadFlask/colorpicker
+    implementation "com.github.QuadFlask:colorpicker:$colorpicker_version"
+
+    // https://github.com/EverythingMe/overscroll-decor
+    // https://mvnrepository.com/artifact/me.everything/overscroll-decor-android?repo=jcenter
+    implementation "me.everything:overscroll-decor-android:$overscroll_version"
+
+    // https://www.bouncycastle.org/latest_releases.html
+    // https://mvnrepository.com/artifact/org.bouncycastle/bcpkix-jdk15on
+    implementation "org.bouncycastle:bcpkix-jdk15to18:$bouncycastle_version"
+
+    // https://github.com/openid/AppAuth-Android
+    // https://mvnrepository.com/artifact/net.openid/appauth?repo=bt-openid
+    implementation "net.openid:appauth:$appauth_version"
+
+    // http://www.freeutils.net/source/jcharset/
+    // https://mvnrepository.com/artifact/net.freeutils/jcharset
+    implementation "net.freeutils:jcharset:$jcharset_version"
+}

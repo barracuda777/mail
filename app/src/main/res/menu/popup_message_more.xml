@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_button"
+        android:title="@string/title_buttons">
+        <menu>
+            <item
+                android:id="@+id/menu_button_junk"
+                android:checkable="true"
+                android:title="@string/title_spam" />
+            <item
+                android:id="@+id/menu_button_trash"
+                android:checkable="true"
+                android:title="@string/title_trash" />
+            <item
+                android:id="@+id/menu_button_archive"
+                android:checkable="true"
+                android:title="@string/title_archive" />
+            <item
+                android:id="@+id/menu_button_move"
+                android:checkable="true"
+                android:title="@string/title_move" />
+            <item
+                android:id="@+id/menu_button_copy"
+                android:checkable="true"
+                android:title="@string/title_copy_btn" />
+            <item
+                android:id="@+id/menu_button_event"
+                android:checkable="true"
+                android:title="@string/title_event" />
+            <item
+                android:id="@+id/menu_button_print"
+                android:checkable="true"
+                android:title="@string/title_print" />
+            <item
+                android:id="@+id/menu_button_unsubscribe"
+                android:checkable="true"
+                android:title="@string/title_unsubscribe" />
+            <item
+                android:id="@+id/menu_button_rule"
+                android:checkable="true"
+                android:title="@string/title_message_rule" />
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/menu_unseen"
+        android:title="@string/title_unseen" />
+
+    <item
+        android:id="@+id/menu_snooze"
+        android:title="@string/title_snooze" />
+
+    <item
+        android:id="@+id/menu_hide"
+        android:title="@string/title_hide" />
+
+    <item
+        android:id="@+id/menu_flag_color"
+        android:title="@string/title_flag_color" />
+
+    <item
+        android:id="@+id/menu_set_importance"
+        android:title="@string/title_set_importance">
+        <menu>
+            <item
+                android:id="@+id/menu_set_importance_high"
+                android:title="@string/title_importance_high" />
+            <item
+                android:id="@+id/menu_set_importance_normal"
+                android:title="@string/title_importance_normal" />
+            <item
+                android:id="@+id/menu_set_importance_low"
+                android:title="@string/title_importance_low" />
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/menu_move_to"
+        android:title="@string/title_move_to" />
+
+    <item
+        android:id="@+id/menu_copy_to"
+        android:title="@string/title_copy_to" />
+
+    <item
+        android:id="@+id/menu_delete"
+        android:title="@string/title_delete" />
+
+    <item
+        android:id="@+id/menu_resync"
+        android:title="@string/title_resync" />
+
+    <item
+        android:id="@+id/menu_search_in_text"
+        android:title="@string/title_search_in_text" />
+
+    <item
+        android:id="@+id/menu_create_rule"
+        android:title="@string/title_create_rule" />
+
+    <item
+        android:id="@+id/menu_manage_keywords"
+        android:title="@string/title_manage_keywords" />
+
+    <item
+        android:id="@+id/menu_share"
+        android:title="@string/title_share" />
+
+    <item
+        android:id="@+id/menu_event"
+        android:title="@string/title_event" />
+
+    <item
+        android:id="@+id/menu_print"
+        android:title="@string/title_print" />
+
+    <item
+        android:id="@+id/menu_show_headers"
+        android:checkable="true"
+        android:title="@string/title_show_headers" />
+
+    <item
+        android:id="@+id/menu_raw_save"
+        android:enabled="false"
+        android:title="@string/title_raw_save" />
+
+    <item
+        android:id="@+id/menu_raw_send"
+        android:enabled="false"
+        android:title="@string/title_raw_send" />
+</menu>

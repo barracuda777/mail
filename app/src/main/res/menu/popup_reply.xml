@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_reply_to_sender"
+        android:title="@string/title_reply_to_sender" />
+
+    <item
+        android:id="@+id/menu_reply_to_all"
+        android:title="@string/title_reply_to_all" />
+
+    <item
+        android:id="@+id/menu_reply_list"
+        android:title="@string/title_reply_list" />
+
+    <item
+        android:id="@+id/menu_reply_receipt"
+        android:title="@string/title_reply_receipt" />
+
+    <item
+        android:id="@+id/menu_forward"
+        android:title="@string/title_forward" />
+
+    <item
+        android:id="@+id/menu_editasnew"
+        android:title="@string/title_editasnew" />
+
+    <item
+        android:id="@+id/menu_new_message"
+        android:title="@string/title_new_message" />
+
+    <item
+        android:id="@+id/menu_reply_answer"
+        android:title="@string/title_reply_template" />
+</menu>

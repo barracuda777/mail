@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <files-path
+        name="attachments"
+        path="attachments" />
+    <files-path
+        name="raw"
+        path="raw" />
+    <cache-path
+        name="photo"
+        path="photo" />
+    <cache-path
+        name="calendar"
+        path="calendar" />
+    <cache-path
+        name="images"
+        path="images" />
+</paths>

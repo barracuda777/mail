@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="eu.faircode.email.ActivityView">
+
+    <eu.faircode.email.SwipeRefreshLayoutEx
+        android:id="@+id/swipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="eu.faircode.email.BehaviorBottomMargin">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <eu.faircode.email.FixedTextView
+                android:id="@+id/tvSupport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:padding="6dp"
+                android:text="@string/title_pro_support"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/vSeparatorSupport"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?attr/colorSeparator"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvSupport" />
+
+            <eu.faircode.email.FixedTextView
+                android:id="@+id/tvHintSupport"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="36dp"
+                android:padding="6dp"
+                android:text="@string/title_hint_support"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                app:layout_constraintEnd_toStartOf="@+id/ibHintSupport"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/vSeparatorSupport" />
+
+            <ImageButton
+                android:id="@+id/ibHintSupport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/title_legend_close_hint"
+                android:padding="9dp"
+                app:layout_constraintBottom_toBottomOf="@id/tvHintSupport"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvHintSupport"
+                app:srcCompat="@drawable/baseline_close_24" />
+
+            <View
+                android:id="@+id/vSeparatorHintSupport"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?attr/colorSeparator"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvHintSupport" />
+
+            <eu.faircode.email.FixedTextView
+                android:id="@+id/tvHintSwipe"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="36dp"
+                android:padding="6dp"
+                android:text="@string/title_hint_message_actions"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                app:layout_constraintEnd_toStartOf="@+id/ibHintSwipe"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/vSeparatorHintSupport" />
+
+            <ImageButton
+                android:id="@+id/ibHintSwipe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/title_legend_close_hint"
+                android:padding="9dp"
+                app:layout_constraintBottom_toBottomOf="@id/tvHintSwipe"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvHintSwipe"
+                app:srcCompat="@drawable/baseline_close_24" />
+
+            <View
+                android:id="@+id/vSeparatorHintSwipe"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?attr/colorSeparator"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvHintSwipe" />
+
+            <eu.faircode.email.FixedTextView
+                android:id="@+id/tvHintSelect"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="36dp"
+                android:padding="6dp"
+                android:text="@string/title_hint_message_selection"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                app:layout_constraintEnd_toStartOf="@+id/ibHintSelect"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/vSeparatorHintSwipe" />
+
+            <ImageButton
+                android:id="@+id/ibHintSelect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/title_legend_close_hint"
+                android:padding="9dp"
+                app:layout_constraintBottom_toBottomOf="@id/tvHintSelect"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvHintSelect"
+                app:srcCompat="@drawable/baseline_close_24" />
+
+            <View
+                android:id="@+id/vSeparatorHintSelect"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?attr/colorSeparator"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvHintSelect" />
+
+            <eu.faircode.email.ViewTextDelayed
+                android:id="@+id/tvNoEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_no_messages"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                app:layout_constraintBottom_toBottomOf="@+id/rvMessage"
+                app:layout_constraintEnd_toEndOf="@+id/rvMessage"
+                app:layout_constraintStart_toStartOf="@+id/rvMessage"
+                app:layout_constraintTop_toTopOf="@+id/rvMessage" />
+
+            <eu.faircode.email.ViewTextDelayed
+                android:id="@+id/tvNoEmailHint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_filters_active"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                app:layout_constraintEnd_toEndOf="@+id/rvMessage"
+                app:layout_constraintStart_toStartOf="@+id/rvMessage"
+                app:layout_constraintTop_toBottomOf="@+id/tvNoEmail" />
+
+            <eu.faircode.email.FixedRecyclerView
+                android:id="@+id/rvMessage"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:clipToPadding="false"
+                android:paddingTop="6dp"
+                android:paddingBottom="90dp"
+                android:scrollbarStyle="outsideOverlay"
+                android:scrollbars="none"
+                app:fastScrollEnabled="false"
+                app:fastScrollHorizontalThumbDrawable="@drawable/scroll_thumb"
+                app:fastScrollHorizontalTrackDrawable="@drawable/scroll_track"
+                app:fastScrollVerticalThumbDrawable="@drawable/scroll_thumb"
+                app:fastScrollVerticalTrackDrawable="@drawable/scroll_track"
+                app:layout_constraintBottom_toTopOf="@+id/sbThread"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/vSeparatorHintSelect" />
+
+            <View
+                android:id="@+id/vwAnchor"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintEnd_toEndOf="@id/rvMessage"
+                app:layout_constraintTop_toTopOf="@id/rvMessage" />
+
+            <eu.faircode.email.ContentLoadingProgressBar
+                android:id="@+id/pbWait"
+                style="@style/Base.Widget.AppCompat.ProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                app:layout_constraintBottom_toBottomOf="@id/rvMessage"
+                app:layout_constraintEnd_toEndOf="@id/rvMessage"
+                app:layout_constraintStart_toStartOf="@id/rvMessage"
+                app:layout_constraintTop_toTopOf="@id/rvMessage" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabReply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:layout_margin="@dimen/fab_padding"
+                android:contentDescription="@string/title_reply"
+                android:tint="?attr/colorFabForeground"
+                app:backgroundTint="?attr/colorFabBackground"
+                app:layout_constraintBottom_toTopOf="@+id/sbThread"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/baseline_reply_24" />
+
+            <ImageButton
+                android:id="@+id/ibDown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:contentDescription="@string/title_accessibility_scroll_down"
+                android:padding="12dp"
+                android:tint="?attr/colorSeparator"
+                app:layout_constraintBottom_toTopOf="@+id/sbThread"
+                app:layout_constraintEnd_toStartOf="@+id/ibUp"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/baseline_vertical_align_bottom_24" />
+
+            <ImageButton
+                android:id="@+id/ibUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:contentDescription="@string/title_accessibility_scroll_up"
+                android:padding="12dp"
+                android:tint="?attr/colorSeparator"
+                app:layout_constraintBottom_toTopOf="@+id/sbThread"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toEndOf="@+id/ibDown"
+                app:srcCompat="@drawable/baseline_vertical_align_top_24" />
+
+            <ImageButton
+                android:id="@+id/ibSeen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:contentDescription="@string/title_accessibility_filter_out_seen"
+                android:padding="12dp"
+                android:tint="?attr/colorSeparator"
+                app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+                app:layout_constraintEnd_toStartOf="@id/ibUnflagged"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/baseline_drafts_24" />
+
+            <ImageButton
+                android:id="@+id/ibUnflagged"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:contentDescription="@string/title_accessibility_filter_out_unflagged"
+                android:padding="12dp"
+                android:tint="?attr/colorSeparator"
+                app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+                app:layout_constraintEnd_toStartOf="@+id/ibSnoozed"
+                app:layout_constraintStart_toEndOf="@id/ibSeen"
+                app:srcCompat="@drawable/baseline_star_24" />
+
+            <ImageButton
+                android:id="@+id/ibSnoozed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:contentDescription="@string/title_accessibility_filter_out_snoozed"
+                android:padding="12dp"
+                android:tint="?attr/colorSeparator"
+                app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ibUnflagged"
+                app:srcCompat="@drawable/baseline_timelapse_24" />
+
+            <SeekBar
+                android:id="@+id/sbThread"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottom_navigation"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:background="?attr/colorPrimary"
+                app:itemIconTint="@color/action_foreground"
+                app:itemTextColor="@color/action_foreground"
+                app:labelVisibilityMode="unlabeled"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:menu="@menu/action_messages" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/grpSupport"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:constraint_referenced_ids="tvSupport,vSeparatorSupport" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/grpHintSupport"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:constraint_referenced_ids="tvHintSupport,ibHintSupport,vSeparatorHintSupport" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/grpHintSwipe"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:constraint_referenced_ids="tvHintSwipe,ibHintSwipe,vSeparatorHintSwipe" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/grpHintSelect"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:constraint_referenced_ids="tvHintSelect,ibHintSelect,vSeparatorHintSelect" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/grpReady"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:constraint_referenced_ids="rvMessage" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </eu.faircode.email.SwipeRefreshLayoutEx>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabMore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="@dimen/fab_padding"
+        android:layout_marginBottom="90dp"
+        android:contentDescription="@string/title_more"
+        android:tint="?attr/colorFabForeground"
+        android:tooltipText="@string/title_more"
+        app:backgroundTint="?attr/colorFabBackground"
+        app:srcCompat="@drawable/baseline_more_vert_24" />
+
+    <TextView
+        android:id="@+id/tvSelectedCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selected_count_background"
+        android:elevation="7dp"
+        android:paddingHorizontal="6dp"
+        android:paddingVertical="3dp"
+        android:text="3"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/action_foreground"
+        app:layout_anchor="@id/fabMore"
+        app:layout_anchorGravity="center_horizontal|bottom" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="@dimen/fab_padding"
+        android:contentDescription="@string/title_search_server"
+        android:tint="?attr/colorFabForeground"
+        android:tooltipText="@string/title_search_server"
+        app:backgroundTint="?attr/colorFabBackground"
+        app:srcCompat="@drawable/baseline_youtube_searched_for_24" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabCompose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="@dimen/fab_padding"
+        android:contentDescription="@string/title_compose"
+        android:tint="?attr/colorFabForeground"
+        android:tooltipText="@string/title_compose"
+        app:backgroundTint="?attr/colorFabBackground"
+        app:srcCompat="@drawable/baseline_edit_24" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_margin="@dimen/fab_padding"
+        android:contentDescription="@string/title_legend_section_folders"
+        android:tint="?attr/colorFabForeground"
+        android:tooltipText="@string/title_compose"
+        app:backgroundTint="?attr/colorWarning"
+        app:srcCompat="@drawable/baseline_warning_24" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
