@@ -75,7 +75,27 @@ public class EditTextCompose extends FixedEditText {
     @Override
     public boolean onTextContextMenuItem(int id) {
         try {
-            if (id == android.R.id.paste) {
+            if (id == android.R.id.copy) {
+                int start = getSelectionStart();
+                int end = getSelectionEnd();
+                if (start > end) {
+                    int s = start;
+                    start = end;
+                    end = s;
+                }
+
+                Context context = getContext();
+                ClipboardManager cbm = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                if (start != end && cbm != null) {
+                    CharSequence selected = getEditableText().subSequence(start, end);
+                    if (selected instanceof Spanned) {
+                        String html = HtmlHelper.toHtml((Spanned) selected, context);
+                        cbm.setPrimaryClip(ClipData.newHtmlText(context.getString(R.string.app_name), selected, html));
+                        setSelection(end);
+                        return false;
+                    }
+                }
+            } else if (id == android.R.id.paste) {
                 Context context = getContext();
                 ClipboardManager cbm = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
                 if (cbm != null && cbm.hasPrimaryClip()) {
@@ -160,7 +180,7 @@ public class EditTextCompose extends FixedEditText {
                         at android.widget.TextView.paste(TextView.java:8891)
                         at android.widget.TextView.onTextContextMenuItem(TextView.java:8706)
              */
-            Log.w(ex);
+            Log.e(ex);
             return false;
         }
     }

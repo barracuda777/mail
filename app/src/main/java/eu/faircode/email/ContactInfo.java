@@ -32,8 +32,6 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.Handler;
-import android.os.Looper;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
 
@@ -376,7 +374,8 @@ public class ContactInfo {
                     if (isRecoverable(ex, context))
                         Log.i(ex);
                     else {
-                        Log.w(ex);
+                        if (!(ex instanceof FileNotFoundException))
+                            Log.w(ex);
                         try {
                             file.createNewFile();
                         } catch (IOException ex1) {
@@ -519,9 +518,7 @@ public class ContactInfo {
 
     static void init(final Context context) {
         if (Helper.hasPermission(context, Manifest.permission.READ_CONTACTS)) {
-            Handler handler = new Handler(Looper.getMainLooper());
-
-            ContentObserver observer = new ContentObserver(handler) {
+            ContentObserver observer = new ContentObserver(ApplicationEx.getMainHandler()) {
                 @Override
                 public void onChange(boolean selfChange, Uri uri) {
                     Log.i("Contact changed uri=" + uri);

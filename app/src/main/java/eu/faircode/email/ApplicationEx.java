@@ -32,6 +32,8 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Printer;
 import android.webkit.CookieManager;
 
@@ -156,7 +158,8 @@ public class ApplicationEx extends Application {
     static void upgrade(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         int version = prefs.getInt("version", BuildConfig.VERSION_CODE);
-        Log.i("Upgrading from " + version + " to " + BuildConfig.VERSION_CODE);
+        if (version != BuildConfig.VERSION_CODE)
+            EntityLog.log(context, "Upgrading from " + version + " to " + BuildConfig.VERSION_CODE);
 
         SharedPreferences.Editor editor = prefs.edit();
 
@@ -393,4 +396,12 @@ public class ApplicationEx extends Application {
             Helper.clearAuthentication(ApplicationEx.this);
         }
     };
+
+    private static Handler handler = null;
+
+    synchronized static Handler getMainHandler() {
+        if (handler == null)
+            handler = new Handler(Looper.getMainLooper());
+        return handler;
+    }
 }

@@ -28,7 +28,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Pair;
@@ -403,13 +402,36 @@ public class FragmentOAuth extends FragmentBase {
 
                 EmailProvider provider = EmailProvider.getProvider(context, id);
                 String aprotocol = (provider.imap.starttls ? "imap" : "imaps");
+                int aencryption = (provider.imap.starttls ? EmailService.ENCRYPTION_STARTTLS : EmailService.ENCRYPTION_SSL);
+
+                String username = address;
 
                 if (accessToken != null) {
+                    // https://docs.microsoft.com/en-us/azure/active-directory/develop/access-tokens
                     String[] segments = accessToken.split("\\.");
                     if (segments.length > 1)
                         try {
                             String payload = new String(Base64.decode(segments[1], Base64.DEFAULT));
                             EntityLog.log(context, "token payload=" + payload);
+                            JSONObject jpayload = new JSONObject(payload);
+                            if (jpayload.has("unique_name")) {
+                                String unique_name = jpayload.getString("unique_name");
+                                if (!TextUtils.isEmpty(unique_name) && !unique_name.equals(address)) {
+                                    try (EmailService iservice = new EmailService(
+                                            context, aprotocol, null, aencryption, false,
+                                            EmailService.PURPOSE_CHECK, true)) {
+                                        iservice.connect(
+                                                provider.imap.host, provider.imap.port,
+                                                EmailService.AUTH_TYPE_OAUTH, provider.id,
+                                                unique_name, state,
+                                                null, null);
+                                        username = unique_name;
+                                        Log.i("token unique_name=" + unique_name);
+                                    } catch (Throwable ex) {
+                                        Log.w(ex);
+                                    }
+                                }
+                            }
                         } catch (Throwable ex) {
                             Log.w(ex);
                         }
@@ -423,82 +445,54 @@ public class FragmentOAuth extends FragmentBase {
                             // https://jwt.ms/
                             String payload = new String(Base64.decode(segments[1], Base64.DEFAULT));
                             EntityLog.log(context, "jwt payload=" + payload);
-                            JSONObject jpayload = new JSONObject(payload);
-                            if (jpayload.has("email")) {
-                                String email = jpayload.getString("email");
-                                if (!TextUtils.isEmpty(email) && !email.equals(address)) {
-                                    try (EmailService iservice = new EmailService(
-                                            context, aprotocol, null, false, EmailService.PURPOSE_CHECK, true)) {
-                                        iservice.connect(
-                                                provider.imap.host, provider.imap.port,
-                                                EmailService.AUTH_TYPE_OAUTH, provider.id,
-                                                email, state,
-                                                null, null);
-                                        address = email;
-                                        Log.i("jwt email=" + email);
-                                    } catch (Throwable ex) {
-                                        Log.w(ex);
-                                    }
-                                }
-                            }
                         } catch (Throwable ex) {
                             Log.e(ex);
                         }
                 }
 
-                String primaryEmail;
                 List<Pair<String, String>> identities = new ArrayList<>();
 
-                if (askAccount) {
-                    primaryEmail = address;
+                if (askAccount)
                     identities.add(new Pair<>(address, personal));
-                } else
+                else
                     throw new IllegalArgumentException("Unknown provider=" + id);
-
-                if (TextUtils.isEmpty(primaryEmail) || identities.size() == 0)
-                    throw new IllegalArgumentException("Primary email address not found");
-
-                if (!Helper.EMAIL_ADDRESS.matcher(primaryEmail).matches())
-                    throw new IllegalArgumentException(context.getString(R.string.title_email_invalid, primaryEmail));
 
                 ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo ani = (cm == null ? null : cm.getActiveNetworkInfo());
                 if (ani == null || !ani.isConnected())
                     throw new IllegalArgumentException(context.getString(R.string.title_no_internet));
 
-                Log.i("OAuth email=" + primaryEmail);
+                Log.i("OAuth username=" + username);
                 for (Pair<String, String> identity : identities)
                     Log.i("OAuth identity=" + identity.first + "/" + identity.second);
-
-                int at = primaryEmail.indexOf('@');
-                String username = primaryEmail.substring(0, at);
 
                 List<EntityFolder> folders;
 
                 Log.i("OAuth checking IMAP provider=" + provider.id);
                 try (EmailService iservice = new EmailService(
-                        context, aprotocol, null, false, EmailService.PURPOSE_CHECK, true)) {
+                        context, aprotocol, null, aencryption, false,
+                        EmailService.PURPOSE_CHECK, true)) {
                     iservice.connect(
                             provider.imap.host, provider.imap.port,
                             EmailService.AUTH_TYPE_OAUTH, provider.id,
-                            primaryEmail, state,
+                            username, state,
                             null, null);
 
                     folders = iservice.getFolders();
-
-                    if (folders == null)
-                        throw new IllegalArgumentException(context.getString(R.string.title_setup_no_system_folders));
                 }
 
                 Log.i("OAuth checking SMTP provider=" + provider.id);
                 Long max_size;
                 String iprotocol = (provider.smtp.starttls ? "smtp" : "smtps");
+                int iencryption = (provider.smtp.starttls ? EmailService.ENCRYPTION_STARTTLS : EmailService.ENCRYPTION_SSL);
+
                 try (EmailService iservice = new EmailService(
-                        context, iprotocol, null, false, EmailService.PURPOSE_CHECK, true)) {
+                        context, iprotocol, null, iencryption, false,
+                        EmailService.PURPOSE_CHECK, true)) {
                     iservice.connect(
                             provider.smtp.host, provider.smtp.port,
                             EmailService.AUTH_TYPE_OAUTH, provider.id,
-                            primaryEmail, state,
+                            username, state,
                             null, null);
                     max_size = iservice.getMaxSize();
                 }
@@ -515,14 +509,17 @@ public class FragmentOAuth extends FragmentBase {
                     EntityAccount account = new EntityAccount();
 
                     account.host = provider.imap.host;
-                    account.starttls = provider.imap.starttls;
+                    account.encryption = aencryption;
                     account.port = provider.imap.port;
                     account.auth_type = EmailService.AUTH_TYPE_OAUTH;
                     account.provider = provider.id;
-                    account.user = primaryEmail;
+                    account.user = username;
                     account.password = state;
 
-                    account.name = provider.name + "/" + username;
+                    int at = address.indexOf('@');
+                    String user = address.substring(0, at);
+
+                    account.name = provider.name + "/" + user;
 
                     account.synchronize = true;
                     account.primary = (primary == null);
@@ -568,11 +565,11 @@ public class FragmentOAuth extends FragmentBase {
                         ident.account = account.id;
 
                         ident.host = provider.smtp.host;
-                        ident.starttls = provider.smtp.starttls;
+                        ident.encryption = iencryption;
                         ident.port = provider.smtp.port;
                         ident.auth_type = EmailService.AUTH_TYPE_OAUTH;
                         ident.provider = provider.id;
-                        ident.user = primaryEmail;
+                        ident.user = username;
                         ident.password = state;
                         ident.synchronize = true;
                         ident.primary = ident.user.equals(ident.email);
@@ -638,7 +635,7 @@ public class FragmentOAuth extends FragmentBase {
         btnOAuth.setEnabled(true);
         pbOAuth.setVisibility(View.GONE);
 
-        new Handler().post(new Runnable() {
+        getMainHandler().post(new Runnable() {
             @Override
             public void run() {
                 scroll.smoothScrollTo(0, tvError.getBottom());

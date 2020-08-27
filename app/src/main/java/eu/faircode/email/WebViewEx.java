@@ -41,15 +41,20 @@ public class WebViewEx extends WebView implements DownloadListener, View.OnLongC
     public WebViewEx(Context context) {
         super(context);
 
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        boolean overview_mode = prefs.getBoolean("overview_mode", false);
+        boolean safe_browsing = prefs.getBoolean("safe_browsing", false);
+
         setVerticalScrollBarEnabled(false);
         setHorizontalScrollBarEnabled(false);
+        setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         setDownloadListener(this);
         setOnLongClickListener(this);
 
         WebSettings settings = getSettings();
         settings.setUseWideViewPort(true);
-        settings.setLoadWithOverviewMode(false);
+        settings.setLoadWithOverviewMode(overview_mode);
 
         settings.setBuiltInZoomControls(true);
         settings.setDisplayZoomControls(false);
@@ -60,11 +65,8 @@ public class WebViewEx extends WebView implements DownloadListener, View.OnLongC
         settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-            boolean safe_browsing = prefs.getBoolean("safe_browsing", false);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
             settings.setSafeBrowsingEnabled(safe_browsing);
-        }
     }
 
     void init(
@@ -144,6 +146,58 @@ public class WebViewEx extends WebView implements DownloadListener, View.OnLongC
     }
 
     @Override
+    protected boolean overScrollBy(int deltaX, int deltaY, int scrollX, int scrollY, int scrollRangeX, int scrollRangeY, int maxOverScrollX, int maxOverScrollY, boolean isTouchEvent) {
+        final int overScrollMode = getOverScrollMode();
+        final boolean canScrollHorizontal =
+                computeHorizontalScrollRange() > computeHorizontalScrollExtent();
+        final boolean canScrollVertical =
+                computeVerticalScrollRange() > computeVerticalScrollExtent();
+        final boolean overScrollHorizontal = overScrollMode == OVER_SCROLL_ALWAYS ||
+                (overScrollMode == OVER_SCROLL_IF_CONTENT_SCROLLS && canScrollHorizontal);
+        final boolean overScrollVertical = overScrollMode == OVER_SCROLL_ALWAYS ||
+                (overScrollMode == OVER_SCROLL_IF_CONTENT_SCROLLS && canScrollVertical);
+
+        int newScrollX = scrollX + deltaX;
+        if (!overScrollHorizontal) {
+            maxOverScrollX = 0;
+        }
+
+        int newScrollY = scrollY + deltaY;
+        if (!overScrollVertical) {
+            maxOverScrollY = 0;
+        }
+
+        // Clamp values if at the limits and record
+        final int left = -maxOverScrollX;
+        final int right = maxOverScrollX + scrollRangeX;
+        final int top = -maxOverScrollY;
+        final int bottom = maxOverScrollY + scrollRangeY;
+
+        boolean clampedX = false;
+        if (newScrollX > right) {
+            newScrollX = right;
+            clampedX = true;
+        } else if (newScrollX < left) {
+            newScrollX = left;
+            clampedX = true;
+        }
+
+        boolean clampedY = false;
+        if (newScrollY > bottom) {
+            newScrollY = bottom;
+            clampedY = true;
+        } else if (newScrollY < top) {
+            newScrollY = top;
+            clampedY = true;
+        }
+
+        Log.i("MMM clamped=" + clampedY + " new=" + newScrollY + " dy=" + deltaY + " mode=" + overScrollMode);
+        intf.onOverScrolled(scrollX, scrollY, deltaX, deltaY, clampedX, clampedY);
+
+        return super.overScrollBy(deltaX, deltaY, scrollX, scrollY, scrollRangeX, scrollRangeY, maxOverScrollX, maxOverScrollY, isTouchEvent);
+    }
+
+    @Override
     public void onDownloadStart(
             String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
         Log.i("Download url=" + url + " mime type=" + mimetype);
@@ -181,12 +235,32 @@ public class WebViewEx extends WebView implements DownloadListener, View.OnLongC
         return super.onGenericMotionEvent(event);
     }
 
+    public boolean isZoomed() {
+        int xtend = computeHorizontalScrollExtent();
+        if (xtend != 0) {
+            float xscale = computeHorizontalScrollRange() / (float) xtend;
+            if (xscale > 1.2)
+                return true;
+        }
+
+        int ytend = computeVerticalScrollExtent();
+        if (ytend != 0) {
+            float yscale = computeVerticalScrollRange() / (float) ytend;
+            if (yscale > 1.2)
+                return true;
+        }
+
+        return false;
+    }
+
     interface IWebView {
         void onSizeChanged(int w, int h, int ow, int oh);
 
         void onScaleChanged(float newScale);
 
         void onScrollChange(int scrollX, int scrollY);
+
+        void onOverScrolled(int scrollX, int scrollY, int dx, int dy, boolean clampedX, boolean clampedY);
 
         boolean onOpenLink(String url);
     }
