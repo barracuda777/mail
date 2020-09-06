@@ -1519,18 +1519,21 @@ public class HtmlHelper {
     static void setViewport(Document document, boolean overview) {
         // https://developer.mozilla.org/en-US/docs/Mozilla/Mobile/Viewport_meta_tag
         Elements meta = document.head().select("meta").select("[name=viewport]");
-        if (meta.size() == 1) {
-            String content = meta.attr("content")
-                    .toLowerCase()
-                    .replace(" ", "")
-                    .replace("user-scalable=no", "user-scalable=yes");
-            meta.attr("content", content);
-        } else {
+        if (overview) // fit width
             meta.remove();
-            if (!overview)
+        else {
+            if (meta.size() == 1) {
+                String content = meta.attr("content")
+                        .toLowerCase()
+                        .replace(" ", "")
+                        .replace("user-scalable=no", "user-scalable=yes");
+                meta.attr("content", content);
+            } else {
+                meta.remove();
                 document.head().prependElement("meta")
                         .attr("name", "viewport")
                         .attr("content", "width=device-width, initial-scale=1.0");
+            }
         }
 
         Log.d(document.head().html());
@@ -2114,7 +2117,11 @@ public class HtmlHelper {
                                     else
                                         ssb.setSpan(new BulletSpan(dp6, colorAccent, dp3), start, ssb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                                 else {
+                                    // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/ol
                                     int index = 0;
+                                    String s = parent.attr("start");
+                                    if (!TextUtils.isEmpty(s) && TextUtils.isDigitsOnly(s))
+                                        index = Integer.parseInt(s) - 1;
                                     for (Node child : parent.childNodes()) {
                                         if (child instanceof Element &&
                                                 child.nodeName().equals(element.tagName())) {

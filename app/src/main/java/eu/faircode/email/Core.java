@@ -135,8 +135,12 @@ class Core {
     private static final int SYNC_CHUNCK_SIZE = 200;
     private static final int SYNC_BATCH_SIZE = 20;
     private static final int DOWNLOAD_BATCH_SIZE = 20;
+    private static final int SYNC_YIELD_COUNT = 100;
+    private static final long SYNC_YIELD_DURATION = 1000; // milliseconds
+    private static final int DOWNLOAD_YIELD_COUNT = 25;
+    private static final long DOWNLOAD_YIELD_DURATION = 1000; // milliseconds
     private static final long YIELD_DURATION = 200L; // milliseconds
-    private static final long JOIN_WAIT = 90 * 1000L; // milliseconds
+    private static final long JOIN_WAIT = 180 * 1000L; // milliseconds
     private static final long FUTURE_RECEIVED = 30 * 24 * 3600 * 1000L; // milliseconds
     private static final int LOCAL_RETRY_MAX = 2;
     private static final long LOCAL_RETRY_DELAY = 5 * 1000L; // milliseconds
@@ -873,7 +877,7 @@ class Core {
 
         // Add message
         Long newuid = null;
-        if (istore.hasCapability("UIDPLUS")) {
+        if (MessageHelper.hasCapability(ifolder, "UIDPLUS")) {
             // https://tools.ietf.org/html/rfc4315
             AppendUID[] uids = ifolder.appendUIDMessages(new Message[]{imessage});
             if (uids != null && uids.length > 0 && uids[0] != null && uids[0].uid > 0) {
@@ -956,12 +960,7 @@ class Core {
             }
 
         // Some servers return different capabilities for different sessions
-        boolean canMove = (Boolean) ifolder.doCommand(new IMAPFolder.ProtocolCommand() {
-            @Override
-            public Object doCommand(IMAPProtocol protocol) throws ProtocolException {
-                return protocol.hasCapability("MOVE");
-            }
-        });
+        boolean canMove = MessageHelper.hasCapability(ifolder, "MOVE");
 
         // Some providers do not support the COPY operation for drafts
         boolean draft = (EntityFolder.DRAFTS.equals(folder.type) || EntityFolder.DRAFTS.equals(target.type));
@@ -1807,7 +1806,7 @@ class Core {
         }
     }
 
-    private static void onRule(Context context, JSONArray jargs, EntityMessage message) throws JSONException, IOException {
+    private static void onRule(Context context, JSONArray jargs, EntityMessage message) throws JSONException, IOException, AddressException {
         // Download message body
         DB db = DB.getInstance(context);
 
@@ -1927,15 +1926,25 @@ class Core {
                         }
 
                         msgid = uidlMsgId.get(uidl);
-                        if (msgid == null)
+                        if (msgid == null) {
                             msgid = helper.getMessageID();
-                        else {
+                            if (TextUtils.isEmpty(msgid))
+                                msgid = uidl;
+                        } else {
                             Log.i(folder.name + " POP having uidl=" + uidl);
                             continue;
                         }
                     } else {
                         uidl = null;
                         msgid = helper.getMessageID();
+
+                        if (TextUtils.isEmpty(msgid)) {
+                            Long time = helper.getReceived();
+                            if (time == null)
+                                time = helper.getSent();
+                            if (time != null)
+                                msgid = Long.toString(time);
+                        }
 
                         if (db.message().countMessageByMsgId(folder.id, msgid) > 0) {
                             Log.i(folder.name + " POP having msgid=" + msgid);
@@ -2339,6 +2348,7 @@ class Core {
                 fp.add(GmailFolder.FetchProfileItem.THRID);
 
             // Add/update local messages
+            int synced = 0;
             Long[] ids = new Long[imessages.length];
             Log.i(folder.name + " add=" + imessages.length);
             for (int i = imessages.length - 1; i >= 0 && state.isRunning() && state.isRecoverable(); i -= SYNC_BATCH_SIZE) {
@@ -2394,6 +2404,15 @@ class Core {
                                 false, download && initialize == 0,
                                 rules, state, stats);
                         ids[from + j] = (message == null || message.ui_hide ? null : message.id);
+
+                        if (message != null && full.contains(isub[j]))
+                            if ((++synced % SYNC_YIELD_COUNT) == 0)
+                                try {
+                                    Log.i(folder.name + " yield synced=" + synced);
+                                    Thread.sleep(SYNC_YIELD_DURATION);
+                                } catch (InterruptedException ex) {
+                                    Log.w(ex);
+                                }
                     } catch (MessageRemovedException ex) {
                         Log.w(folder.name, ex);
                     } catch (FolderClosedException ex) {
@@ -2437,6 +2456,7 @@ class Core {
                 db.folder().setFolderSyncState(folder.id, "downloading");
 
                 // Download messages/attachments
+                int downloaded = 0;
                 Log.i(folder.name + " download=" + imessages.length);
                 for (int i = imessages.length - 1; i >= 0 && state.isRunning() && state.isRecoverable(); i -= DOWNLOAD_BATCH_SIZE) {
                     int from = Math.max(0, i - DOWNLOAD_BATCH_SIZE + 1);
@@ -2455,13 +2475,22 @@ class Core {
 
                     for (int j = isub.length - 1; j >= 0 && state.isRunning() && state.isRecoverable(); j--)
                         try {
-                            if (ids[from + j] != null)
-                                downloadMessage(
+                            if (ids[from + j] != null) {
+                                boolean fetched = downloadMessage(
                                         context,
                                         account, folder,
                                         istore, ifolder,
                                         (MimeMessage) isub[j], ids[from + j],
                                         state, stats);
+                                if (fetched)
+                                    if ((++downloaded % DOWNLOAD_YIELD_COUNT) == 0)
+                                        try {
+                                            Log.i(folder.name + " yield downloaded=" + downloaded);
+                                            Thread.sleep(DOWNLOAD_YIELD_DURATION);
+                                        } catch (InterruptedException ex) {
+                                            Log.w(ex);
+                                        }
+                            }
                         } catch (FolderClosedException ex) {
                             throw ex;
                         } catch (Throwable ex) {
@@ -3158,18 +3187,18 @@ class Core {
         }
     }
 
-    private static void downloadMessage(
+    private static boolean downloadMessage(
             Context context,
             EntityAccount account, EntityFolder folder,
             IMAPStore istore, IMAPFolder ifolder,
             MimeMessage imessage, long id, State state, SyncStats stats) throws MessagingException, IOException {
         if (state.getNetworkState().isRoaming())
-            return;
+            return false;
 
         DB db = DB.getInstance(context);
         EntityMessage message = db.message().getMessage(id);
         if (message == null || message.ui_hide)
-            return;
+            return false;
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         long maxSize = prefs.getInt("download", MessageHelper.DEFAULT_DOWNLOAD_SIZE);
@@ -3249,6 +3278,8 @@ class Core {
                             db.attachment().setError(attachment.id, Log.formatThrowable(ex, false));
                         }
         }
+
+        return fetch;
     }
 
     private static void reportEmptyMessage(Context context, State state, EntityAccount account, IMAPStore istore) {
@@ -4149,13 +4180,20 @@ class Core {
         void join(Thread thread) {
             boolean joined = false;
             boolean interrupted = false;
+            String name = thread.getName();
             while (!joined)
                 try {
-                    Log.i("Joining " + thread.getName() +
-                            " state=" + thread.getState() + " alive=" + thread.isAlive());
+                    Log.i("Joining " + name +
+                            " alive=" + thread.isAlive() +
+                            " state=" + thread.getState());
+
                     thread.join(JOIN_WAIT);
+
+                    // https://docs.oracle.com/javase/7/docs/api/java/lang/Thread.State.html
+                    Thread.State state = thread.getState();
                     if (thread.isAlive()) {
-                        Log.e("Join failed state=" + thread.getState() + " interrupted=" + interrupted);
+                        if (interrupted)
+                            Log.e("Join " + name + " failed state=" + state + " interrupted=" + interrupted);
                         if (interrupted)
                             joined = true; // give up
                         else {
@@ -4163,7 +4201,7 @@ class Core {
                             interrupted = true;
                         }
                     } else {
-                        Log.i("Joined " + thread.getName() + " state=" + thread.getState());
+                        Log.i("Joined " + name + " " + " state=" + state);
                         joined = true;
                     }
                 } catch (InterruptedException ex) {
