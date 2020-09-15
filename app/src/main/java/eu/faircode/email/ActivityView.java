@@ -970,6 +970,7 @@ public class ActivityView extends ActivityBilling implements FragmentManager.OnB
 
         String action = intent.getAction();
         Log.i("View intent=" + intent + " action=" + action);
+        boolean recents = (getIntent().getFlags() & Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) != 0;
         if (action != null) {
             intent.setAction(null);
             setIntent(intent);
@@ -1032,26 +1033,22 @@ public class ActivityView extends ActivityBilling implements FragmentManager.OnB
 
                 onMenuOutbox();
 
-            } else if (action.startsWith("thread")) {
+            } else if (action.startsWith("thread") && !recents) {
                 intent.putExtra("thread", action.split(":", 2)[1]);
                 onViewThread(intent);
 
-            } else if (action.equals("widget")) {
-                long account = intent.getLongExtra("account", -1);
-                long folder = intent.getLongExtra("folder", -1);
-
-                intent.removeExtra("account");
-                intent.removeExtra("folder");
-                setIntent(intent);
-
-                if (account > 0 && folder > 0) {
+            } else if (action.equals("widget") && !recents) {
+                long account = intent.getLongExtra("widget_account", -1);
+                long folder = intent.getLongExtra("widget_folder", -1);
+                String type = intent.getStringExtra("widget_type");
+                if (account > 0 && folder > 0 && !TextUtils.isEmpty(type)) {
                     if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
                         getSupportFragmentManager().popBackStack("messages", FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
                         Bundle args = new Bundle();
-                        //args.putString("type", intent.getStringExtra("type"));
                         args.putLong("account", account);
                         args.putLong("folder", folder);
+                        args.putString("type", type);
 
                         FragmentMessages fragment = new FragmentMessages();
                         fragment.setArguments(args);

@@ -72,6 +72,8 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
+import java.util.Map;
+import java.util.WeakHashMap;
 import java.util.concurrent.ExecutorService;
 
 class ImageHelper {
@@ -226,7 +228,7 @@ class ImageHelper {
         return round;
     }
 
-    static Drawable decodeImage(final Context context, final long id, String source, boolean show, int zoom, final TextView view) {
+    static Drawable decodeImage(final Context context, final long id, String source, boolean show, int zoom, final float scale, final TextView view) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         boolean inline = prefs.getBoolean("inline_images", false);
 
@@ -268,9 +270,9 @@ class ImageHelper {
                     int scaleToPixels = res.getDisplayMetrics().widthPixels;
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                         try {
-                            Drawable d = getScaledDrawable(attachment.getFile(context), scaleToPixels);
+                            Drawable d = getScaledDrawable(context, attachment.getFile(context), scaleToPixels);
                             if (view != null)
-                                fitDrawable(d, a, view);
+                                fitDrawable(d, a, scale, view);
                             return d;
                         } catch (IOException ex) {
                             Log.w(ex);
@@ -290,7 +292,7 @@ class ImageHelper {
                             DisplayMetrics dm = context.getResources().getDisplayMetrics();
                             d.setBounds(0, 0, Math.round(bm.getWidth() * dm.density), Math.round(bm.getHeight() * dm.density));
                             if (view != null)
-                                fitDrawable(d, a, view);
+                                fitDrawable(d, a, scale, view);
                             return d;
                         }
                     }
@@ -310,7 +312,7 @@ class ImageHelper {
                     d.setBounds(0, 0, Math.round(bm.getWidth() * dm.density), Math.round(bm.getHeight() * dm.density));
 
                     if (view != null)
-                        fitDrawable(d, a, view);
+                        fitDrawable(d, a, scale, view);
                     return d;
                 } catch (IllegalArgumentException ex) {
                     Log.w(ex);
@@ -355,7 +357,7 @@ class ImageHelper {
                     d.setBounds(0, 0, Math.round(bm.getWidth() * dm.density), Math.round(bm.getHeight() * dm.density));
 
                     if (view != null)
-                        fitDrawable(d, a, view);
+                        fitDrawable(d, a, scale, view);
                     return d;
                 } catch (Throwable ex) {
                     // FileNotFound, Security
@@ -384,7 +386,7 @@ class ImageHelper {
                     } else
                         return cached;
                 else
-                    fitDrawable(cached, a, view);
+                    fitDrawable(cached, a, scale, view);
                 return cached;
             }
 
@@ -425,14 +427,14 @@ class ImageHelper {
                         // Check cache again
                         Drawable cached = getCachedImage(context, id, a.source);
                         if (cached != null) {
-                            fitDrawable(cached, a, view);
+                            fitDrawable(cached, a, scale, view);
                             post(cached, a.source);
                             return;
                         }
 
                         // Download image
                         Drawable d = downloadImage(context, id, a.source);
-                        fitDrawable(d, a, view);
+                        fitDrawable(d, a, scale, view);
                         post(d, a.source);
                     } catch (Throwable ex) {
                         // Show broken icon
@@ -463,6 +465,7 @@ class ImageHelper {
                                     ((AnimatedImageDrawable) d).start();
                             }
 
+                            view.invalidate();
                             view.requestLayout();
                         }
                     });
@@ -479,10 +482,19 @@ class ImageHelper {
         }
     }
 
-    private static void fitDrawable(final Drawable d, final AnnotatedSource a, final View view) {
+    private static Map<Drawable, Rect> drawableBounds = new WeakHashMap<>();
+
+    static void fitDrawable(final Drawable d, final AnnotatedSource a, float scale, final View view) {
+        synchronized (drawableBounds) {
+            if (drawableBounds.containsKey(d))
+                d.setBounds(drawableBounds.get(d));
+            else
+                drawableBounds.put(d, d.copyBounds());
+        }
+
         Rect bounds = d.getBounds();
-        int w = bounds.width();
-        int h = bounds.height();
+        int w = Math.round(Helper.dp2pixels(view.getContext(), bounds.width()) * scale);
+        int h = Math.round(Helper.dp2pixels(view.getContext(), bounds.height()) * scale);
 
         if (a.width == 0 && a.height != 0)
             a.width = Math.round(a.height * w / (float) h);
@@ -490,9 +502,8 @@ class ImageHelper {
             a.height = Math.round(a.width * h / (float) w);
 
         if (a.width != 0 && a.height != 0) {
-            w = Helper.dp2pixels(view.getContext(), a.width);
-            h = Helper.dp2pixels(view.getContext(), a.height);
-            d.setBounds(0, 0, w, h);
+            w = Math.round(Helper.dp2pixels(view.getContext(), a.width) * scale);
+            h = Math.round(Helper.dp2pixels(view.getContext(), a.height) * scale);
         }
 
         float width = view.getContext().getResources().getDisplayMetrics().widthPixels;
@@ -509,11 +520,14 @@ class ImageHelper {
         }
 
         if (w > width) {
-            float scale = width / w;
-            w = Math.round(w * scale);
-            h = Math.round(h * scale);
-            d.setBounds(0, 0, w, h);
+            float s = width / w;
+            w = Math.round(w * s);
+            h = Math.round(h * s);
         }
+
+        d.setBounds(0, 0, w, h);
+
+        //d.setColorFilter(Color.GRAY, PorterDuff.Mode.DST_OVER);
     }
 
     static Bitmap getDataBitmap(String source) {
@@ -532,7 +546,7 @@ class ImageHelper {
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
 
-    private static Drawable getCachedImage(Context context, long id, String source) throws IOException {
+    private static Drawable getCachedImage(Context context, long id, String source) {
         if (id < 0)
             return null;
 
@@ -545,7 +559,12 @@ class ImageHelper {
             DisplayMetrics dm = context.getResources().getDisplayMetrics();
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
-                return getScaledDrawable(file, dm.widthPixels);
+                try {
+                    return getScaledDrawable(context, file, dm.widthPixels);
+                } catch (IOException ex) {
+                    Log.i(ex);
+                    return null;
+                }
 
             Bitmap bm = BitmapFactory.decodeFile(file.getAbsolutePath());
             if (bm != null) {
@@ -618,7 +637,7 @@ class ImageHelper {
                 try (FileOutputStream fos = new FileOutputStream(file)) {
                     Helper.copy(urlConnection.getInputStream(), fos);
                 }
-                return getScaledDrawable(file, dm.widthPixels);
+                return getScaledDrawable(context, file, dm.widthPixels);
             }
 
             bm = getScaledBitmap(
@@ -648,21 +667,41 @@ class ImageHelper {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.P)
-    static Drawable getScaledDrawable(File file, int scaleToPixels) throws IOException {
-        ImageDecoder.Source isource = ImageDecoder.createSource(file);
-        Drawable d = ImageDecoder.decodeDrawable(isource, new ImageDecoder.OnHeaderDecodedListener() {
-            @Override
-            public void onHeaderDecoded(
-                    @NonNull ImageDecoder decoder,
-                    @NonNull ImageDecoder.ImageInfo info,
-                    @NonNull ImageDecoder.Source source) {
-                int factor = 1;
-                while (info.getSize().getWidth() / factor > scaleToPixels)
-                    factor *= 2;
+    static Drawable getScaledDrawable(Context context, File file, int scaleToPixels) throws IOException {
+        Drawable d;
 
-                decoder.setTargetSampleSize(factor);
-            }
-        });
+        try {
+            ImageDecoder.Source isource = ImageDecoder.createSource(file);
+            d = ImageDecoder.decodeDrawable(isource, new ImageDecoder.OnHeaderDecodedListener() {
+                @Override
+                public void onHeaderDecoded(
+                        @NonNull ImageDecoder decoder,
+                        @NonNull ImageDecoder.ImageInfo info,
+                        @NonNull ImageDecoder.Source source) {
+                    int factor = 1;
+                    while (info.getSize().getWidth() / factor > scaleToPixels)
+                        factor *= 2;
+
+                    decoder.setTargetSampleSize(factor);
+                }
+            });
+        } catch (Throwable ex) {
+            Log.i(ex);
+            if (!"android.graphics.ImageDecoder$DecodeException".equals(ex.getClass().getName()))
+                throw ex;
+            /*
+                Samsung:
+                android.graphics.ImageDecoder$DecodeException: Failed to create image decoder with message 'unimplemented'Input contained an error.
+                        at android.graphics.ImageDecoder.nCreate(ImageDecoder.java:-2)
+                        at android.graphics.ImageDecoder.createFromFile(ImageDecoder.java:311)
+                        at android.graphics.ImageDecoder.access$600(ImageDecoder.java:173)
+                        at android.graphics.ImageDecoder$FileSource.createImageDecoder(ImageDecoder.java:543)
+                        at android.graphics.ImageDecoder.decodeDrawableImpl(ImageDecoder.java:1758)
+                        at android.graphics.ImageDecoder.decodeDrawable(ImageDecoder.java:1751)
+             */
+            d = new BitmapDrawable(context.getResources(), file.getAbsolutePath());
+        }
+
         d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
         return d;
     }

@@ -29,7 +29,6 @@ import org.bouncycastle.asn1.DEROctetString;
 import org.bouncycastle.asn1.x509.Extension;
 import org.bouncycastle.asn1.x509.GeneralName;
 import org.bouncycastle.asn1.x509.SubjectKeyIdentifier;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.net.Inet4Address;
@@ -280,7 +279,7 @@ public class EmailService implements AutoCloseable {
                 account.certificate_alias, account.fingerprint);
         if (password != null) {
             DB db = DB.getInstance(context);
-            int count = db.account().setAccountPassword(account.id, account.password);
+            int count = db.account().setAccountPassword(account.id, password);
             Log.i(account.name + " token refreshed=" + count);
         }
     }
@@ -293,7 +292,7 @@ public class EmailService implements AutoCloseable {
                 identity.certificate_alias, identity.fingerprint);
         if (password != null) {
             DB db = DB.getInstance(context);
-            int count = db.identity().setIdentityPassword(identity.id, identity.password);
+            int count = db.identity().setIdentityPassword(identity.id, password);
             Log.i(identity.email + " token refreshed=" + count);
         }
     }
@@ -1062,7 +1061,7 @@ public class EmailService implements AutoCloseable {
             return fingerprint;
         }
 
-        @NotNull
+        @NonNull
         @Override
         public synchronized String toString() {
             return getCause().toString();

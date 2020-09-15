@@ -107,11 +107,13 @@ import biweekly.ICalendar;
 
 public class MessageHelper {
     private boolean ensuredEnvelope = false;
+    private boolean ensuredEnvelopeAll = false;
     private boolean ensuredBody = false;
     private MimeMessage imessage;
 
     private static File cacheDir = null;
 
+    static final int SMALL_MESSAGE_SIZE = 192 * 1024; // bytes
     static final int DEFAULT_DOWNLOAD_SIZE = 256 * 1024; // bytes
     static final String HEADER_CORRELATION_ID = "X-Correlation-ID";
 
@@ -818,7 +820,7 @@ public class MessageHelper {
     }
 
     String getMessageID() throws MessagingException {
-        ensureMessage(false);
+        ensureMessage(false, false);
 
         // Outlook outbox -> sent
         String header = imessage.getHeader(HEADER_CORRELATION_ID, null);
@@ -1119,12 +1121,11 @@ public class MessageHelper {
         String[] h = origin.split("\\s+");
         if (h.length > 1 && h[0].equalsIgnoreCase("from")) {
             String host = h[1];
-            if (host.startsWith("["))
-                host = host.substring(1);
-            if (host.endsWith("]"))
-                host = host.substring(0, host.length() - 1);
-            if (!TextUtils.isEmpty(host))
-                return host;
+            int s = origin.indexOf('[');
+            int e = origin.indexOf(']');
+            if (s > 0 && e > s + 1)
+                host = origin.substring(s + 1, e);
+            return host;
         }
 
         return null;
@@ -2233,15 +2234,23 @@ public class MessageHelper {
     }
 
     private void ensureMessage(boolean body) throws MessagingException {
-        if (body ? ensuredBody : ensuredEnvelope)
+        ensureMessage(body, true);
+    }
+
+    private void ensureMessage(boolean body, boolean all) throws MessagingException {
+        if (body ? ensuredBody : ensuredEnvelopeAll || (ensuredEnvelope && !all))
             return;
 
         if (body)
             ensuredBody = true;
-        else
-            ensuredEnvelope = true;
+        else {
+            if (all)
+                ensuredEnvelopeAll = true;
+            else
+                ensuredEnvelope = true;
+        }
 
-        Log.i("Ensure body=" + body);
+        Log.i("Ensure body=" + body + " all=" + all);
 
         try {
             if (imessage instanceof IMAPMessage) {
@@ -2270,8 +2279,13 @@ public class MessageHelper {
                         Log.w("Protocol missing content-type=" + contentType);
                         throw new MessagingException("Failed to load IMAP envelope");
                     }
-                } else
-                    imessage.getMessageID(); // force loadEnvelope
+                } else {
+                    // force loadEnvelope
+                    if (all)
+                        imessage.getAllHeaders();
+                    else
+                        imessage.getMessageID();
+                }
             }
         } catch (MessagingException ex) {
             // https://javaee.github.io/javamail/FAQ#imapserverbug

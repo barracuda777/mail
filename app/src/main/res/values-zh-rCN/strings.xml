@@ -15,6 +15,9 @@
     <string name="channel_error">错误</string>
     <string name="channel_alert">服务器警告</string>
     <string name="channel_group_contacts">联系人</string>
+    <string name="channel_service_description">账户的同步与监测</string>
+    <string name="channel_send_description">消息的发送</string>
+    <string name="channel_notification_description">新消息通知</string>
     <plurals name="page_conversation">
         <item quantity="other">会话</item>
     </plurals>
@@ -264,7 +267,7 @@
     <string name="title_advanced_caption_message">消息</string>
     <string name="title_advanced_caption_message_header">邮件标头</string>
     <string name="title_advanced_caption_message_body">消息正文</string>
-    <string name="title_advanced_portrait2">在竖屏模式中使用两行</string>
+    <string name="title_advanced_portrait2">点击会话时分屏显示消息列表</string>
     <string name="title_advanced_landscape">在横屏模式下使用两列</string>
     <string name="title_advanced_landscape3">默认在横屏模式下显示导航菜单</string>
     <string name="title_advanced_startup">在启动屏幕上显示</string>
@@ -312,6 +315,7 @@
     <string name="title_advanced_text_size">使用文本大小</string>
     <string name="title_advanced_text_font">使用字体</string>
     <string name="title_advanced_text_align">使用文本对齐</string>
+    <string name="title_advanced_text_separators">使用分隔线</string>
     <string name="title_advanced_collapse_quotes">折叠引用文本</string>
     <string name="title_advanced_images_inline">自动显示内联图像</string>
     <string name="title_advanced_seekbar">在底部用一个圆点显示会话相对位置</string>
@@ -694,6 +698,7 @@
     <string name="title_spam">垃圾邮件</string>
     <string name="title_move">移动</string>
     <string name="title_copy_btn">复制</string>
+    <string name="title_keywords_btn">关键词</string>
     <string name="title_unsubscribe">取消订阅</string>
     <string name="title_message_rule">创建规则</string>
     <string name="title_no_junk">不是垃圾邮件</string>
@@ -945,6 +950,8 @@
     <string name="title_answer_caption">编辑模板</string>
     <string name="title_answer_reply">回复模板</string>
     <string name="title_answer_name">模板名称</string>
+    <string name="title_answer_group">模板组 (可选)</string>
+    <string name="title_answer_standard">默认</string>
     <string name="title_answer_favorite">收藏</string>
     <string name="title_answer_hide">从菜单中隐藏</string>
     <string name="title_answer_text">模板内容</string>
@@ -961,7 +968,7 @@
     <string name="title_rule_keyword">添加关键字</string>
     <string name="title_rule_move">移动</string>
     <string name="title_rule_copy">复制（标签）</string>
-    <string name="title_rule_answer">回复</string>
+    <string name="title_rule_answer">回复/转发</string>
     <string name="title_rule_tts">文字转语音</string>
     <string name="title_rule_automation">自动化</string>
     <string name="title_rule_caption">编辑规则</string>
@@ -987,7 +994,9 @@
     <string name="title_rule_thread">在同一会话和文件夹中的所有消息</string>
     <string name="title_rule_identity">身份</string>
     <string name="title_rule_template">回复模板</string>
+    <string name="title_rule_forward_to">转发给</string>
     <string name="title_rule_cc">回信给邮件抄送地址</string>
+    <string name="title_rule_with_attachments">含附件</string>
     <string name="title_rule_answer_remark">(设置自动回复后)任何会话将仅发送一个回复，以避免回复循环</string>
     <string name="title_rule_name_missing">缺少规则名称</string>
     <string name="title_rule_condition_missing">条件缺失</string>
@@ -1201,6 +1210,13 @@
     <string name="title_log">日志</string>
     <string name="title_auto_scroll">自动滚动</string>
     <string name="title_log_clear">清除</string>
+    <string name="title_rules_search_hint">搜索名称或条件</string>
+    <string name="title_rules_export">导出规则</string>
+    <string name="title_rules_import">导入规则</string>
+    <string name="title_rules_delete_all">删除所有规则</string>
+    <string name="title_rules_delete_junk">删除垃圾邮件规则</string>
+    <string name="title_rules_delete_all_confirm">确定要删除所有规则吗？</string>
+    <string name="title_rules_delete_junk_confirm">确定要删除所有将邮件移动到垃圾文件夹的规则吗?</string>
     <string name="title_debug_info">调试信息</string>
     <string name="title_debug_info_remark">请描述问题及问题发生的时间：</string>
     <string name="title_crash_info_remark">请描述应用崩溃时您的操作</string>

@@ -15,6 +15,9 @@
     <string name="channel_error">Fehler</string>
     <string name="channel_alert">Serverbenachrichtigungen</string>
     <string name="channel_group_contacts">Kontakte</string>
+    <string name="channel_service_description">Synchronisation und Überwachung von Konten</string>
+    <string name="channel_send_description">Benachrichtigungen für den Versand</string>
+    <string name="channel_notification_description">Benachrichtigungen für neue Nachrichten</string>
     <plurals name="page_conversation">
         <item quantity="one">Unterhaltung</item>
         <item quantity="other">Unterhaltungen</item>
@@ -325,6 +328,7 @@ Protokolle, die dem Standard nicht entsprechen, wie „Microsoft Exchange Web Se
     <string name="title_advanced_text_size">Textgrößen verwenden</string>
     <string name="title_advanced_text_font">Schriftarten verwenden</string>
     <string name="title_advanced_text_align">Textausrichtung verwenden</string>
+    <string name="title_advanced_text_separators">Trennlinien verwenden</string>
     <string name="title_advanced_collapse_quotes">Zitierten Text ausblenden</string>
     <string name="title_advanced_images_inline">Eingebettete Grafiken automatisch anzeigen</string>
     <string name="title_advanced_seekbar">Relative Unterhaltungsposition mit einem Punkt kennzeichnen</string>
@@ -666,7 +670,7 @@ Protokolle, die dem Standard nicht entsprechen, wie „Microsoft Exchange Web Se
     <string name="title_subject_reply">Re: %1$s</string>
     <string name="title_subject_forward">Fwd: %1$s</string>
     <string name="title_buttons">Schaltflächen</string>
-    <string name="title_seen">Als gelesen kennzeichnen</string>
+    <string name="title_seen">Gelesen</string>
     <string name="title_unseen">Als ungelesen kennzeichnen</string>
     <string name="title_toggle_seen">Gelesen umschalten</string>
     <string name="title_hide">Ausblenden</string>
@@ -690,9 +694,9 @@ Protokolle, die dem Standard nicht entsprechen, wie „Microsoft Exchange Web Se
     <string name="title_show_headers">Kopfzeilen anzeigen</string>
     <string name="title_raw_save">Rohdaten speichern</string>
     <string name="title_raw_send">Als Anhang senden</string>
-    <string name="title_manage_keywords">Labels verwalten</string>
+    <string name="title_manage_keywords">Stichwörter verwalten</string>
     <string name="title_manage_labels">Gmail-Labels verwalten</string>
-    <string name="title_add_keyword">Label hinzufügen</string>
+    <string name="title_add_keyword">Stichwort hinzufügen</string>
     <string name="title_show_inline">Eingebettete Anhänge anzeigen</string>
     <string name="title_download_all">Alle herunterladen</string>
     <string name="title_save_all">Alles speichern</string>
@@ -706,6 +710,7 @@ Protokolle, die dem Standard nicht entsprechen, wie „Microsoft Exchange Web Se
     <string name="title_spam">Spam</string>
     <string name="title_move">Verschieben</string>
     <string name="title_copy_btn">Kopieren</string>
+    <string name="title_keywords_btn">Stichwörter</string>
     <string name="title_unsubscribe">Abbestellen</string>
     <string name="title_message_rule">Regel erstellen</string>
     <string name="title_no_junk">Kein Spam</string>
@@ -955,13 +960,15 @@ Protokolle, die dem Standard nicht entsprechen, wie „Microsoft Exchange Web Se
     <string name="title_answer_caption">Vorlage bearbeiten</string>
     <string name="title_answer_reply">Antwortvorlage</string>
     <string name="title_answer_name">Vorlagenname</string>
+    <string name="title_answer_group">Vorlagengruppe (optional)</string>
+    <string name="title_answer_standard">Standard</string>
     <string name="title_answer_favorite">Favorit</string>
     <string name="title_answer_hide">Aus Menüs ausblenden</string>
     <string name="title_answer_text">Vorlagentext</string>
     <string name="title_answer_template_name">$name$ wird durch den vollständigen Absendernamen ersetzt</string>
     <string name="title_answer_template_email">$email$ wird durch die E-Mail-Adresse des Absenders ersetzt</string>
     <string name="title_rule_noop">Keine Aktion</string>
-    <string name="title_rule_seen">Als gelesen kennzeichnen</string>
+    <string name="title_rule_seen">Gelesen kennzeichnen</string>
     <string name="title_rule_unseen">Als ungelesen kennzeichnen</string>
     <string name="title_rule_hide">Ausblenden</string>
     <string name="title_rule_ignore">Benachrichtigungen unterdrücken</string>
@@ -971,7 +978,7 @@ Protokolle, die dem Standard nicht entsprechen, wie „Microsoft Exchange Web Se
     <string name="title_rule_keyword">Schlagwort hinzufügen</string>
     <string name="title_rule_move">Verschieben</string>
     <string name="title_rule_copy">Kopieren (Label)</string>
-    <string name="title_rule_answer">Antworten</string>
+    <string name="title_rule_answer">Antworten/Weiterleiten</string>
     <string name="title_rule_tts">Sprachausgabe</string>
     <string name="title_rule_automation">Automatisierung</string>
     <string name="title_rule_caption">Regel bearbeiten</string>
@@ -997,7 +1004,9 @@ Protokolle, die dem Standard nicht entsprechen, wie „Microsoft Exchange Web Se
     <string name="title_rule_thread">Alle Nachrichten zur selben Unterhaltung und Ordner</string>
     <string name="title_rule_identity">Identität</string>
     <string name="title_rule_template">Antwortvorlage</string>
+    <string name="title_rule_forward_to">Weiterleiten an</string>
     <string name="title_rule_cc">Den CC-Adressen antworten</string>
+    <string name="title_rule_with_attachments">Mit Anhängen</string>
     <string name="title_rule_answer_remark">Für jede Unterhaltung wird per Antwortregel nur eine Antwort gesendet, um Antwortschleifen zu vermeiden</string>
     <string name="title_rule_name_missing">Regelname fehlt</string>
     <string name="title_rule_condition_missing">Voraussetzung fehlt</string>
@@ -1212,6 +1221,13 @@ Zur Erinnerung daran zeigt FairEmail einen kleinen Hinweis an, dieser verschwind
     <string name="title_log">Protokoll</string>
     <string name="title_auto_scroll">Automatisches Blättern</string>
     <string name="title_log_clear">Protokoll leeren</string>
+    <string name="title_rules_search_hint">Nach Name oder Bedingung suchen</string>
+    <string name="title_rules_export">Regeln exportieren</string>
+    <string name="title_rules_import">Regeln importieren</string>
+    <string name="title_rules_delete_all">Alle Regeln löschen</string>
+    <string name="title_rules_delete_junk">Spam-Regeln löschen</string>
+    <string name="title_rules_delete_all_confirm">Alle Regeln löschen?</string>
+    <string name="title_rules_delete_junk_confirm">Alle Regeln löschen, die Nachrichten in den Spam-Ordner verschieben?</string>
     <string name="title_debug_info">Fehlersuchinformationen</string>
     <string name="title_debug_info_remark">Bitte beschreiben Sie das Problem und zu welchem Zeitpunkt es aufgetreten ist:</string>
     <string name="title_crash_info_remark">Bitte beschreiben Sie, was Sie getan haben, während die App abgestürzt ist:</string>

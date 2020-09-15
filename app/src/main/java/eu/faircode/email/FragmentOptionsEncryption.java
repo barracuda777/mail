@@ -40,6 +40,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -67,6 +68,7 @@ import java.util.Enumeration;
 import java.util.List;
 
 public class FragmentOptionsEncryption extends FragmentBase implements SharedPreferences.OnSharedPreferenceChangeListener {
+    private ImageButton ibInfo;
     private SwitchCompat swSign;
     private SwitchCompat swEncrypt;
     private SwitchCompat swAutoDecrypt;
@@ -102,7 +104,7 @@ public class FragmentOptionsEncryption extends FragmentBase implements SharedPre
         View view = inflater.inflate(R.layout.fragment_options_encryption, container, false);
 
         // Get controls
-
+        ibInfo = view.findViewById(R.id.ibInfo);
         swSign = view.findViewById(R.id.swSign);
         swEncrypt = view.findViewById(R.id.swEncrypt);
         swAutoDecrypt = view.findViewById(R.id.swAutoDecrypt);
@@ -121,9 +123,10 @@ public class FragmentOptionsEncryption extends FragmentBase implements SharedPre
 
         Intent intent = new Intent(OpenPgpApi.SERVICE_INTENT_2);
         List<ResolveInfo> ris = pm.queryIntentServices(intent, 0); // package whitelisted
-        for (ResolveInfo ri : ris)
-            if (ri.serviceInfo != null)
-                openPgpProvider.add(ri.serviceInfo.packageName);
+        if (ris != null)
+            for (ResolveInfo ri : ris)
+                if (ri.serviceInfo != null)
+                    openPgpProvider.add(ri.serviceInfo.packageName);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, android.R.id.text1);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -135,6 +138,13 @@ public class FragmentOptionsEncryption extends FragmentBase implements SharedPre
         // Wire controls
 
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+
+        ibInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Helper.viewFAQ(getContext(), 12);
+            }
+        });
 
         swSign.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

@@ -309,7 +309,6 @@ public class FragmentMessages extends FragmentBase implements SharedPreferences.
 
     final private Map<String, String> kv = new HashMap<>();
     final private Map<String, List<Long>> values = new HashMap<>();
-    final private LongSparseArray<Float> scales = new LongSparseArray<>();
     final private LongSparseArray<Float> sizes = new LongSparseArray<>();
     final private LongSparseArray<Integer> heights = new LongSparseArray<>();
     final private LongSparseArray<Pair<Integer, Integer>> positions = new LongSparseArray<>();
@@ -479,6 +478,7 @@ public class FragmentMessages extends FragmentBase implements SharedPreferences.
             }
         });
 
+        grpSupport.setVisibility(View.GONE);
         tvSupport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -510,7 +510,7 @@ public class FragmentMessages extends FragmentBase implements SharedPreferences.
             }
         });
 
-        rvMessage.setHasFixedSize(true);
+        rvMessage.setHasFixedSize(false);
 
         int threads = prefs.getInt("query_threads", 4);
         if (threads >= 4)
@@ -1647,19 +1647,6 @@ public class FragmentMessages extends FragmentBase implements SharedPreferences.
         }
 
         @Override
-        public void setScale(long id, Float size) {
-            if (size == null)
-                scales.remove(id);
-            else
-                scales.put(id, size);
-        }
-
-        @Override
-        public float getScale(long id, float defaultSize) {
-            return scales.get(id, defaultSize);
-        }
-
-        @Override
         public void setSize(long id, Float size) {
             if (size == null)
                 sizes.remove(id);
@@ -2464,6 +2451,10 @@ public class FragmentMessages extends FragmentBase implements SharedPreferences.
                     popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem target) {
+                            Intent intent = target.getIntent();
+                            if (intent == null)
+                                return false;
+
                             if (!ActivityBilling.isPro(getContext())) {
                                 startActivity(new Intent(getContext(), ActivityBilling.class));
                                 return true;
@@ -2472,7 +2463,7 @@ public class FragmentMessages extends FragmentBase implements SharedPreferences.
                             startActivity(new Intent(getContext(), ActivityCompose.class)
                                     .putExtra("action", "reply")
                                     .putExtra("reference", message.id)
-                                    .putExtra("answer", target.getIntent().getLongExtra("id", -1)));
+                                    .putExtra("answer", intent.getLongExtra("id", -1)));
                             return true;
                         }
                     });
@@ -3529,7 +3520,6 @@ public class FragmentMessages extends FragmentBase implements SharedPreferences.
                                 Log.i("Hidden id=" + id);
                                 for (String key : values.keySet())
                                     values.get(key).remove(id);
-                                scales.remove(id);
                                 sizes.remove(id);
                                 heights.remove(id);
                                 positions.remove(id);
@@ -4109,6 +4099,7 @@ public class FragmentMessages extends FragmentBase implements SharedPreferences.
         int zoom = prefs.getInt("view_zoom", compact ? 0 : 1);
         zoom = ++zoom % 3;
         prefs.edit().putInt("view_zoom", zoom).apply();
+        clearMeasurements();
         adapter.setZoom(zoom);
     }
 
@@ -4122,7 +4113,14 @@ public class FragmentMessages extends FragmentBase implements SharedPreferences.
 
         adapter.setCompact(compact);
         adapter.setZoom(zoom);
+        clearMeasurements();
         getActivity().invalidateOptionsMenu();
+    }
+
+    private void clearMeasurements() {
+        sizes.clear();
+        heights.clear();
+        positions.clear();
     }
 
     private void onMenuSelectLanguage() {
@@ -5790,13 +5788,13 @@ public class FragmentMessages extends FragmentBase implements SharedPreferences.
                         }
 
                         if (addr == null)
-                            throw new IllegalArgumentException("addr not found");
+                            throw new IllegalArgumentException("Autocrypt: addr not found");
 
                         if (!addr.equalsIgnoreCase(peer))
-                            throw new IllegalArgumentException("addr different from peer");
+                            throw new IllegalArgumentException("Autocrypt: addr different from peer");
 
                         if (keydata == null)
-                            throw new IllegalArgumentException("keydata not found");
+                            throw new IllegalArgumentException("Autocrypt: keydata not found");
 
                         AutocryptPeerUpdate update = AutocryptPeerUpdate.create(
                                 keydata, new Date(message.received), mutual);

@@ -424,6 +424,7 @@ public class AdapterMessage extends RecyclerView.Adapter<AdapterMessage.ViewHold
         private ImageButton ibSeen;
         private ImageButton ibAnswer;
         private ImageButton ibLabels;
+        private ImageButton ibKeywords;
         private ImageButton ibCopy;
         private ImageButton ibMove;
         private ImageButton ibArchive;
@@ -475,7 +476,6 @@ public class AdapterMessage extends RecyclerView.Adapter<AdapterMessage.ViewHold
         private TwoStateOwner powner = new TwoStateOwner(owner, "MessagePopup");
 
         private ScaleGestureDetector gestureDetector;
-        private Map<Drawable, Pair<Integer, Integer>> drawableSize = new HashMap<>();
 
         private SimpleTask taskContactInfo;
 
@@ -635,6 +635,7 @@ public class AdapterMessage extends RecyclerView.Adapter<AdapterMessage.ViewHold
             ibSeen = vsBody.findViewById(R.id.ibSeen);
             ibAnswer = vsBody.findViewById(R.id.ibAnswer);
             ibLabels = vsBody.findViewById(R.id.ibLabels);
+            ibKeywords = vsBody.findViewById(R.id.ibKeywords);
             ibCopy = vsBody.findViewById(R.id.ibCopy);
             ibMove = vsBody.findViewById(R.id.ibMove);
             ibArchive = vsBody.findViewById(R.id.ibArchive);
@@ -731,6 +732,7 @@ public class AdapterMessage extends RecyclerView.Adapter<AdapterMessage.ViewHold
                 ibSeen.setOnClickListener(this);
                 ibAnswer.setOnClickListener(this);
                 ibLabels.setOnClickListener(this);
+                ibKeywords.setOnClickListener(this);
                 ibCopy.setOnClickListener(this);
                 ibMove.setOnClickListener(this);
                 ibArchive.setOnClickListener(this);
@@ -775,24 +777,14 @@ public class AdapterMessage extends RecyclerView.Adapter<AdapterMessage.ViewHold
 
                             // Image size
                             Spanned spanned = (Spanned) tvBody.getText();
-                            int bw = tvBody.getWidth() - tvBody.getPaddingStart() - tvBody.getPaddingEnd();
-                            if (bw != 0)
-                                for (ImageSpan img : spanned.getSpans(0, spanned.length(), ImageSpan.class)) {
-                                    Drawable d = img.getDrawable();
-                                    Pair<Integer, Integer> p = drawableSize.get(d);
-                                    if (p == null || p.first == 0)
-                                        continue;
-
-                                    float s = Math.min(bw / (float) p.first, scale);
-                                    properties.setScale(message.id, s);
-
-                                    int w = Math.round(p.first * s);
-                                    int h = Math.round(p.second * s);
-                                    d.setBounds(0, 0, w, h);
-                                }
+                            for (ImageSpan img : spanned.getSpans(0, spanned.length(), ImageSpan.class)) {
+                                Drawable d = img.getDrawable();
+                                ImageHelper.AnnotatedSource a = new ImageHelper.AnnotatedSource(img.getSource());
+                                ImageHelper.fitDrawable(d, a, scale, tvBody);
+                            }
 
                             // Feedback
-                            String perc = Math.round(scale) + " %";
+                            String perc = Math.round(scale * 100) + " %";
                             if (toast != null)
                                 toast.cancel();
                             toast = ToastEx.makeText(context, perc, Toast.LENGTH_SHORT);
@@ -844,6 +836,7 @@ public class AdapterMessage extends RecyclerView.Adapter<AdapterMessage.ViewHold
                 ibSeen.setOnClickListener(null);
                 ibAnswer.setOnClickListener(null);
                 ibLabels.setOnClickListener(null);
+                ibKeywords.setOnClickListener(null);
                 ibCopy.setOnClickListener(null);
                 ibMove.setOnClickListener(null);
                 ibArchive.setOnClickListener(null);
@@ -881,8 +874,7 @@ public class AdapterMessage extends RecyclerView.Adapter<AdapterMessage.ViewHold
             boolean outbox = EntityFolder.OUTBOX.equals(message.folderType);
             boolean outgoing = isOutgoing(message);
             boolean reverse = (outgoing &&
-                    (viewType != ViewType.THREAD || !threading) &&
-                    !show_recipients && !"sender".equals(sort));
+                    (viewType != ViewType.THREAD || !threading) && !show_recipients);
             Address[] senders = ContactInfo.fillIn(reverse ? message.to : message.senders, prefer_contact);
             Address[] recipients = ContactInfo.fillIn(reverse ? message.from : message.recipients, prefer_contact);
             boolean authenticated =
@@ -982,7 +974,6 @@ public class AdapterMessage extends RecyclerView.Adapter<AdapterMessage.ViewHold
                 vwColor.setTag(colorBackground);
                 vwColor.setBackgroundColor(colorBackground);
             }
-            vwColor.setAlpha(message.ui_seen ? Helper.LOW_LIGHT : 1.0f);
             vwColor.setVisibility(color_stripe ? View.VISIBLE : View.GONE);
 
             // Expander
@@ -1323,6 +1314,7 @@ public class AdapterMessage extends RecyclerView.Adapter<AdapterMessage.ViewHold
             ibSeen.setVisibility(View.GONE);
             ibAnswer.setVisibility(View.GONE);
             ibLabels.setVisibility(View.GONE);
+            ibKeywords.setVisibility(View.GONE);
             ibCopy.setVisibility(View.GONE);
             ibMove.setVisibility(View.GONE);
             ibArchive.setVisibility(View.GONE);
@@ -1459,6 +1451,7 @@ public class AdapterMessage extends RecyclerView.Adapter<AdapterMessage.ViewHold
             ibSeen.setVisibility(View.GONE);
             ibAnswer.setVisibility(View.GONE);
             ibLabels.setVisibility(View.GONE);
+            ibKeywords.setVisibility(View.GONE);
             ibCopy.setVisibility(View.GONE);
             ibMove.setVisibility(View.GONE);
             ibArchive.setVisibility(View.GONE);
@@ -1588,6 +1581,8 @@ public class AdapterMessage extends RecyclerView.Adapter<AdapterMessage.ViewHold
                             message.accountProtocol == EntityAccount.TYPE_POP);
                     boolean junk = (move && (hasJunk && !inJunk));
                     boolean inbox = (move && (inArchive || inTrash || inJunk));
+                    boolean keywords = (!message.folderReadOnly && message.uid != null &&
+                            message.accountProtocol == EntityAccount.TYPE_IMAP);
                     boolean labels = (gmail && move && !inTrash && !inJunk && !outbox);
                     boolean seen = (!(message.folderReadOnly || message.uid == null) ||
                             message.accountProtocol == EntityAccount.TYPE_POP);
@@ -1604,6 +1599,7 @@ public class AdapterMessage extends RecyclerView.Adapter<AdapterMessage.ViewHold
                     boolean button_archive = prefs.getBoolean("button_archive", true);
                     boolean button_move = prefs.getBoolean("button_move", true);
                     boolean button_copy = prefs.getBoolean("button_copy", false);
+                    boolean button_keywords = prefs.getBoolean("button_keywords", false);
                     boolean button_seen = prefs.getBoolean("button_seen", false);
                     boolean button_event = prefs.getBoolean("button_event", false);
                     boolean button_print = prefs.getBoolean("button_print", false);
@@ -1621,6 +1617,7 @@ public class AdapterMessage extends RecyclerView.Adapter<AdapterMessage.ViewHold
                     ibSeen.setVisibility(tools && button_seen && !outbox && seen ? View.VISIBLE : View.GONE);
                     ibAnswer.setVisibility(!tools || outbox || (!expand_all && expand_one) ? View.GONE : View.VISIBLE);
                     ibLabels.setVisibility(tools && labels_header && labels ? View.VISIBLE : View.GONE);
+                    ibKeywords.setVisibility(tools && button_keywords && keywords ? View.VISIBLE : View.GONE);
                     ibCopy.setVisibility(tools && button_copy && move ? View.VISIBLE : View.GONE);
                     ibMove.setVisibility(tools && button_move && move ? View.VISIBLE : View.GONE);
                     ibArchive.setVisibility(tools && button_archive && archive ? View.VISIBLE : View.GONE);
@@ -1970,7 +1967,8 @@ public class AdapterMessage extends RecyclerView.Adapter<AdapterMessage.ViewHold
             args.putBoolean("show_quotes", show_quotes);
             args.putInt("zoom", zoom);
 
-            args.putFloat("scale", properties.getScale(message.id, 1.0f));
+            float scale = (size == 0 || textSize == 0 ? 1.0f : size / (textSize * message_zoom / 100f));
+            args.putFloat("scale", scale);
 
             new SimpleTask<Object>() {
                 @Override
@@ -2145,17 +2143,10 @@ public class AdapterMessage extends RecyclerView.Adapter<AdapterMessage.ViewHold
                         }
 
                         // Draw images
-                        Map<Drawable, Pair<Integer, Integer>> map = new HashMap<>();
                         SpannableStringBuilder ssb = HtmlHelper.fromDocument(context, document, true, new Html.ImageGetter() {
                             @Override
                             public Drawable getDrawable(String source) {
-                                Drawable drawable = ImageHelper.decodeImage(context, message.id, source, show_images, zoom, tvBody);
-                                Rect bounds = drawable.getBounds();
-                                map.put(drawable, new Pair<>(bounds.right, bounds.bottom));
-
-                                bounds.right = Math.round(bounds.right * scale);
-                                bounds.bottom = Math.round(bounds.bottom * scale);
-                                drawable.setBounds(bounds);
+                                Drawable drawable = ImageHelper.decodeImage(context, message.id, source, show_images, zoom, scale, tvBody);
 
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                                     if (drawable instanceof AnimatedImageDrawable)
@@ -2165,7 +2156,6 @@ public class AdapterMessage extends RecyclerView.Adapter<AdapterMessage.ViewHold
                                 return drawable;
                             }
                         }, null);
-                        drawableSize = map;
 
                         if (show_quotes)
                             return ssb;
@@ -2906,6 +2896,9 @@ public class AdapterMessage extends RecyclerView.Adapter<AdapterMessage.ViewHold
                         break;
                     case R.id.ibLabels:
                         onActionLabels(message);
+                        break;
+                    case R.id.ibKeywords:
+                        onMenuManageKeywords(message);
                         break;
                     case R.id.ibCopy:
                         onActionMove(message, true);
@@ -3828,6 +3821,7 @@ public class AdapterMessage extends RecyclerView.Adapter<AdapterMessage.ViewHold
             boolean button_archive = prefs.getBoolean("button_archive", true);
             boolean button_move = prefs.getBoolean("button_move", true);
             boolean button_copy = prefs.getBoolean("button_copy", false);
+            boolean button_keywords = prefs.getBoolean("button_keywords", false);
             boolean button_seen = prefs.getBoolean("button_seen", false);
             boolean button_event = prefs.getBoolean("button_event", false);
             boolean button_print = prefs.getBoolean("button_print", false);
@@ -3842,6 +3836,7 @@ public class AdapterMessage extends RecyclerView.Adapter<AdapterMessage.ViewHold
             popupMenu.getMenu().findItem(R.id.menu_button_archive).setChecked(button_archive);
             popupMenu.getMenu().findItem(R.id.menu_button_move).setChecked(button_move);
             popupMenu.getMenu().findItem(R.id.menu_button_copy).setChecked(button_copy);
+            popupMenu.getMenu().findItem(R.id.menu_button_keywords).setChecked(button_keywords);
             popupMenu.getMenu().findItem(R.id.menu_button_seen).setChecked(button_seen);
             popupMenu.getMenu().findItem(R.id.menu_button_event).setChecked(button_event);
             popupMenu.getMenu().findItem(R.id.menu_button_print).setChecked(button_print);
@@ -3914,6 +3909,9 @@ public class AdapterMessage extends RecyclerView.Adapter<AdapterMessage.ViewHold
                             return true;
                         case R.id.menu_button_copy:
                             onMenuButton(message, "copy", target.isChecked());
+                            return true;
+                        case R.id.menu_button_keywords:
+                            onMenuButton(message, "keywords", target.isChecked());
                             return true;
                         case R.id.menu_button_seen:
                             onMenuButton(message, "seen", target.isChecked());
@@ -5806,10 +5804,6 @@ public class AdapterMessage extends RecyclerView.Adapter<AdapterMessage.ViewHold
         boolean getValue(String name, long id);
 
         void setExpanded(TupleMessageEx message, boolean expanded);
-
-        void setScale(long id, Float size);
-
-        float getScale(long id, float defaultSize);
 
         void setSize(long id, Float size);
 

@@ -142,47 +142,47 @@
 * [(22) Что означает ошибка учётной записи/папки ...?](#user-content-faq22)
 * [(23) Почему я получаю предупреждение .. ?](#user-content-faq23)
 * [(24) Что такое просмотр сообщений на сервере?](#user-content-faq24)
-* [(25) Why can't I select/open/save an image, attachment or a file?](#user-content-faq25)
-* [(26) Can I help to translate FairEmail in my own language?](#user-content-faq26)
+* [(25) Почему я не могу выбрать/открыть/сохранить изображение, вложение или файл?](#user-content-faq25)
+* [(26) Могу ли я помочь перевести FairEmail на свой родной язык?](#user-content-faq26)
 * [(27) Как я могу различать встроенные и внешние изображения?](#user-content-faq27)
-* [(28) How can I manage status bar notifications?](#user-content-faq28)
-* [(29) How can I get new message notifications for other folders?](#user-content-faq29)
-* [(30) How can I use the provided quick settings?](#user-content-faq30)
-* [(31) How can I use the provided shortcuts?](#user-content-faq31)
-* [(32) How can I check if reading email is really safe?](#user-content-faq32)
-* [(33) Why are edited sender addresses not working?](#user-content-faq33)
+* [(28) Как я могу управлять уведомлениями в строке состояния?](#user-content-faq28)
+* [(29) Как я могу получать уведомления о новых сообщениях для других папок?](#user-content-faq29)
+* [(30) Как использовать быстрые настройки?](#user-content-faq30)
+* [(31) Как я могу использовать предоставленные ярлыки?](#user-content-faq31)
+* [(32) Как я могу проверить, действительно ли чтение электронной почты безопасно?](#user-content-faq32)
+* [(33) Почему редактируемые адреса отправителя не работают?](#user-content-faq33)
 * [(34) How are identities matched?](#user-content-faq34)
-* [(35) Why should I be careful with viewing images, attachments, and the original message?](#user-content-faq35)
-* [(36) How are settings files encrypted?](#user-content-faq36)
-* [(37) How are passwords stored?](#user-content-faq37)
-* [(39) How can I reduce the battery usage of FairEmail?](#user-content-faq39)
-* [(40) How can I reduce the network usage of FairEmail?](#user-content-faq40)
-* [(41) How can I fix the error 'Handshake failed' ?](#user-content-faq41)
-* [(42) Can you add a new provider to the list of providers?](#user-content-faq42)
-* [(43) Can you show the original ... ?](#user-content-faq43)
-* [(44) Can you show contact photos / identicons in the sent folder?](#user-content-faq44)
-* [(45) How can I fix 'This key is not available. To use it, you must import it as one of your own!' ?](#user-content-faq45)
-* [(46) Why does the message list keep refreshing?](#user-content-faq46)
-* [(47) How do I solve the error 'No primary account or no drafts folder' ?](#user-content-faq47)
-* [~~(48) How do I solve the error 'No primary account or no archive folder' ?~~](#user-content-faq48)
-* [(49) How do I fix 'An outdated app sent a file path instead of a file stream' ?](#user-content-faq49)
-* [(50) Can you add an option to synchronize all messages?](#user-content-faq50)
-* [(51) How are folders sorted?](#user-content-faq51)
-* [(52) Why does it take some time to reconnect to an account?](#user-content-faq52)
-* [(53) Can you stick the message action bar to the top/bottom?](#user-content-faq53)
-* [~~(54) How do I use a namespace prefix?~~](#user-content-faq54)
-* [(55) How can I mark all messages as read / move or delete all messages?](#user-content-faq55)
-* [(56) Can you add support for JMAP?](#user-content-faq56)
-* [~~(57) Can I use HTML in signatures?~~](#user-content-faq57)
-* [(58) What does an open/closed email icon mean?](#user-content-faq58)
-* [(59) Can original messages be opened in the browser?](#user-content-faq59)
-* [(60) Did you known ...?](#user-content-faq60)
-* [(61) Why are some messages shown dimmed?](#user-content-faq61)
-* [(62) Which authentication methods are supported?](#user-content-faq62)
-* [(63) How are images resized for displaying on screens?](#user-content-faq63)
-* [~~(64) Can you add custom actions for swipe left/right?~~](#user-content-faq64)
-* [(65) Why are some attachments shown dimmed?](#user-content-faq65)
-* [(66) Is FairEmail available in the Google Play Family Library?](#user-content-faq66)
+* [(35) Почему я должен быть аккуратен с просмотром изображений, вложений и оригинального сообщения?](#user-content-faq35)
+* [(36) Как зашифрованы файлы настроек?](#user-content-faq36)
+* [(37) Как хранятся пароли?](#user-content-faq37)
+* [(39) Как я могу уменьшить использование батареи FairEmail?](#user-content-faq39)
+* [(40) Как я могу уменьшить использование сети FairEmail?](#user-content-faq40)
+* [(41) Как исправить ошибку 'Не удалось выполнить рукопожатие'?](#user-content-faq41)
+* [(42) Можете ли вы добавить нового провайдера в список провайдеров?](#user-content-faq42)
+* [(43) Можете ли вы показать оригинал ... ?](#user-content-faq43)
+* [(44) Можете ли вы показать фотографии / идентификаторы контактов в отправленной папке?](#user-content-faq44)
+* [(45) Как исправить 'Этот ключ недоступен. Чтобы использовать его, вы должны импортировать его как свой собственный!' ?](#user-content-faq45)
+* [(46) Почему список сообщений постоянно обновляется?](#user-content-faq46)
+* [(47) Как устранить ошибку 'Нет основной учетной записи или нет папки с черновиками' ?](#user-content-faq47)
+* [~~(48) Как устранить ошибку 'Нет основной учетной записи или нет папки архива' ?~~](#user-content-faq48)
+* [(49) Как исправить ошибку 'Устаревшее приложение отправило путь к файлу вместо потока файлов' ?](#user-content-faq49)
+* [(50) Вы можете добавить опцию для синхронизации всех сообщений?](#user-content-faq50)
+* [(51) Как сортируются папки?](#user-content-faq51)
+* [(52) Почему требуется некоторое время для переподключения к аккаунту?](#user-content-faq52)
+* [(53) Можете ли вы приклеить панель действий с сообщениями вверху/внизу?](#user-content-faq53)
+* [~~(54) Как использовать префикс пространства имён?~~](#user-content-faq54)
+* [(55) Как я могу пометить все сообщения как прочитанные / переместить или удалить все сообщения?](#user-content-faq55)
+* [(56) Вы можете добавить поддержку JMAP?](#user-content-faq56)
+* [~~(57) Можно использовать HTML в подписях?~~](#user-content-faq57)
+* [(58) Что означает иконка с открытым или закрытым письмом?](#user-content-faq58)
+* [(59) Можно ли открыть оригинальные сообщения в браузере?](#user-content-faq59)
+* [(60) Знали ли Вы ...?](#user-content-faq60)
+* [(61) Почему некоторые сообщение затемнены?](#user-content-faq61)
+* [(62) Какие методы аутентификации поддерживаются?](#user-content-faq62)
+* [(63) Как изменяются размеры изображений для отображения на экранах?](#user-content-faq63)
+* [~~(64) Можно ли настроить действия при свайпе влево/вправо?~~](#user-content-faq64)
+* [(65) Почему некоторые вложения затемнены?](#user-content-faq65)
+* [(66) FairEmail доступен в семейной библиотеке Google Play?](#user-content-faq66)
 * [(67) How can I snooze conversations?](#user-content-faq67)
 * [~~(68) Why can Adobe Acrobat reader not open PDF attachments / Microsoft apps not open attached documents?~~](#user-content-faq68)
 * [(69) Can you add auto scroll up on new message?](#user-content-faq69)
@@ -222,7 +222,7 @@
 * [(104) What do I need to know about error reporting?](#user-content-faq104)
 * [(105) How does the roam-like-at-home option work?](#user-content-faq105)
 * [(106) Which launchers can show a badge count with the number of unread messages?](#user-content-faq106)
-* [(107) How do I used colored stars?](#user-content-faq107)
+* [(107) Как пользоваться цветными звездами?](#user-content-faq107)
 * [(108) Can you add permanently delete messages from any folder?](#user-content-faq108)
 * [~~(109) Why is 'select account' available in official versions only?~~](#user-content-faq109)
 * [(110) Why are (some) messages empty and/or attachments corrupted?](#user-content-faq110)
@@ -332,7 +332,7 @@ Android shows icons of high priority status bar notifications first and will hid
 
 The status bar notification can be disabled via the notification settings of FairEmail:
 
-* Android 8 Oreo and later: tap the *Service channel* button and disable the notification channel via the Android settings
+* Android 8 Oreo and later: tap the *Receive channel* button and disable the channel via the Android settings (this won't disable new message notifications)
 * Android 7 Nougat and before: enabled *Use background service to synchronize messages*, but be sure to read the remark below the setting
 
 You can switch to periodically synchronization of messages in the receive settings to remove the notification, but be aware that this might use more battery power. See [here](#user-content-faq39) for more details about battery usage.
@@ -596,7 +596,7 @@ You'll need to install and configure [OpenKeychain](https://f-droid.org/en/packa
 
 **Important**: on some Android versions / devices it is necessary to enable *Show popups while running in background* in the additional permissions of the Android app settings of the OpenKeychain app. Without this permission the draft will be saved, but the OpenKeychain popup to confirm/select might not appear.
 
-FairEmail will send the [Autocrypt](https://autocrypt.org/) headers for use by other email clients and send received Autocrypt headers to the OpenKeychain app for storage.
+FairEmail will send the [Autocrypt](https://autocrypt.org/) header for use by other email clients, but only for signed and encrypted messages because too many email servers have problems with the often long Autocrypt header. Note that the most secure way to start an encrypted email exchange is by sending signed messages first. Received Autocrypt headers will be sent to the OpenKeychain app for storage on verifying a signature or decrypting a message.
 
 All key handling is delegated to the OpenKey chain app for security reasons. This also means that FairEmail does not store PGP keys.
 
@@ -612,6 +612,7 @@ Signed-only messages are supported, encrypted-only messages are not supported.
 
 Common errors:
 
+* *No key*: there is no PGP key available for one of the listed email addresses
 * *Missing key for encryption*: there is probably a key selected in FairEmail that does not exist in the OpenKeychain app anymore. Resetting the key (see above) will probably fix this problem.
 
 *S/MIME*
@@ -694,7 +695,21 @@ This means that searching for a message text requires that files containing the 
 
 In the *miscellaneous settings* you can enable *Build search index* to significantly increase the speed of searching on the device, but be aware that this will increase battery and storage space usage. The search index is based on words, so searching for partial text is not possible. Searching using the search index is by default AND, so searching for *apple orange* will search for apple AND orange. Words separated by commas result in searching for OR, so for example *apple, orange* will search for apple OR orange. Both can be combined, so searching for *apple, orange banana* will search for apple OR (orange AND banana). Using the search index is a pro feature.
 
-Searching messages on the device is a free feature, searching messages on the server is a pro feature.
+From version 1.1315 it is possible to use search expressions like this:
+
+```
+apple +banana -cherry ?nuts
+```
+
+This will result in searching like this:
+
+```
+("apple" AND "banana" AND NOT "cherry") OR "nuts"
+```
+
+Search expressions can be used for searching on the device via the search index and for searching on the email server, but not for searching on the device without search index for performance reasons.
+
+Searching on the device is a free feature, using the search index and searching on the server is a pro feature.
 
 <br />
 
@@ -779,7 +794,7 @@ Note that only some convenience and advanced features need to be purchased which
 
 Also note that most free apps will appear not to be sustainable in the end, whereas FairEmail is properly maintained and supported, and that free apps may have a catch, like sending privacy sensitive information to the internet.
 
-Я работаю над FairEmail почти каждый день более двух лет, поэтому я думаю, что цена более чем разумна. For this reason there won't be discounts either.
+I have been working on FairEmail almost every day for more than two years, so I think the price is more than reasonable. For this reason there won't be discounts either.
 
 <br />
 
@@ -812,7 +827,7 @@ There are general errors and errors specific to Gmail accounts (see below).
 
 **General errors**
 
-The error *... Authentication failed ...* or *... AUTHENTICATE failed ...* likely means that your username or password was incorrect. Some providers expect as username just *username* and others your full email address *username@example.com*. When copying/pasting to enter a username or password, invisible characters might be copied, which could cause this problem as well. Некоторые менеджеры паролей также делают это неправильно. Имя пользователя может быть чувствительным к регистру, поэтому попробуйте использовать только строчные буквы. Пароль почти всегда чувствителен к регистру. Некоторые провайдеры требуют использования пароля приложения вместо пароля учетной записи, поэтому проверьте документацию провайдера. Иногда необходимо сначала включить внешний доступ (IMAP/SMTP) на сайте провайдера. Другими возможными причинами являются то, что учетная запись заблокирована или вход был заблокирован в административном порядке, например, позволяя входить только с определенных сетей / IP адресов.
+The error *... Authentication failed ...* or *... AUTHENTICATE failed ...* likely means that your username or password was incorrect. Some providers expect as username just *username* and others your full email address *username@example.com*. When copying/pasting to enter a username or password, invisible characters might be copied, which could cause this problem as well. Some password managers are known to do this incorrectly too. The username might be case sensitive, so try lowercase characters only. The password is almost always case sensitive. Some providers require using an app password instead of the account password, so please check the documentation of the provider. Sometimes it is necessary to enable external access (IMAP/SMTP) on the website of the provider first. Other possible causes are that the account is blocked or that logging in has been administratively restricted in some way, for example by allowing to login from certain networks / IP addresses only.
 
 The error *... Too many bad auth attempts ...* likely means that you are using a Yahoo account password instead of an app password. Please see [this FAQ](#user-content-faq88) about how to setup a Yahoo account.
 
@@ -946,6 +961,8 @@ Alternatively, you might be able to enable the *Files* app again using the Andro
 
 Yes, you can translate the texts of FairEmail in your own language [on Crowdin](https://crowdin.com/project/open-source-email). Registration is free.
 
+If you would like your name or alias to be included in the list of contributors in *About* the app, please [contact me](https://contact.faircode.eu/?product=fairemailsupport).
+
 <br />
 
 <a name="faq27"></a>
@@ -953,15 +970,15 @@ Yes, you can translate the texts of FairEmail in your own language [on Crowdin](
 
 External image:
 
-![External image](https://raw.githubusercontent.com/google/material-design-icons/master/image/1x_web/ic_image_black_48dp.png)
+![External image](https://github.com/M66B/FairEmail/blob/master/images/baseline_image_black_48dp.png)
 
 Embedded image:
 
-![Embedded image](https://raw.githubusercontent.com/google/material-design-icons/master/image/1x_web/ic_photo_library_black_48dp.png)
+![Embedded image](https://github.com/M66B/FairEmail/blob/master/images/baseline_photo_library_black_48dp.png)
 
 Broken image:
 
-![Broken image](https://raw.githubusercontent.com/google/material-design-icons/master/image/1x_web/ic_broken_image_black_48dp.png)
+![Broken image](https://github.com/M66B/FairEmail/blob/master/images/baseline_broken_image_black_48dp.png)
 
 Note that downloading external images from a remote server can be used to record you did see a message, which you likely don't want if the message is spam or malicious.
 
@@ -1369,11 +1386,11 @@ There are almost no providers offering the [JMAP](https://jmap.io/) protocol, so
 
 The email icon in the folder list can be open (outlined) or closed (solid):
 
-![External image](https://raw.githubusercontent.com/google/material-design-icons/master/communication/1x_web/ic_mail_outline_black_48dp.png)
+![External image](https://github.com/M66B/FairEmail/blob/master/images/baseline_mail_outline_black_48dp.png)
 
 Message bodies and attachments are not downloaded by default.
 
-![External image](https://raw.githubusercontent.com/google/material-design-icons/master/communication/1x_web/ic_email_black_48dp.png)
+![External image](https://github.com/M66B/FairEmail/blob/master/images/baseline_email_black_48dp.png)
 
 Message bodies and attachments are downloaded by default.
 
@@ -1471,7 +1488,7 @@ Inline (image) attachments are shown dimmed. [Inline attachments](https://tools.
 <a name="faq66"></a>
 **(66) Is FairEmail available in the Google Play Family Library?**
 
-Цена FairEmail слишком низкая, ниже большинства подобных приложений (также существует [слишком много комиссий и налогов](#user-content-faq19), один только Google берёт 30 %) чтобы оправдать доступность FairEmail в [Семейной Библиотеке Google Play](https://support.google.com/googleone/answer/7007852). Заметим, что Google продвигает Семейную библиотеку, но заставляет разработчиков платить за неё, ничего не внося от себя.
+The price of FairEmail is too low, lower than that of most similar apps, and there are [too many fees and taxes](#user-content-faq19), Google alone already takes 30 %, to justify making FairEmail available in the [Google Play Family Library](https://support.google.com/googleone/answer/7007852). Note that Google promotes the Family libray, but lets developers pay for it and doesn't contribute anything.
 
 <br />
 
@@ -1748,7 +1765,7 @@ Please see [here](https://en.wikipedia.org/wiki/Web_beacon) about what a trackin
 
 FairEmail will in most cases automatically recognize tracking images and replace them by this icon:
 
-![External image](https://raw.githubusercontent.com/google/material-design-icons/master/maps/1x_web/ic_my_location_black_48dp.png)
+![External image](https://github.com/M66B/FairEmail/blob/master/images/baseline_my_location_black_48dp.png)
 
 Automatic recognition of tracking images can be disabled in the privacy settings.
 
@@ -2106,7 +2123,7 @@ FairEmail is an email client only, so you need to bring your own email address.
 
 There are plenty of email providers to choose from. Which email provider is best for you depends on your wishes/requirements. Please see the websites of [Restore privacy](https://restoreprivacy.com/secure-email/) or [Privacy Tools](https://www.privacytools.io/providers/email/) for a list of privacy oriented email providers with advantages and disadvantages.
 
-Некоторые провайдеры, такие как ProtonMail, Tutanota, используют проприетарные протоколы электронной почты, что делает невозможным использование почтовых приложений сторонних производителей. Пожалуйста, смотрите [этот FAQ](#user-content-faq129) для получения дополнительной информации.
+Some providers, like ProtonMail, Tutanota, use proprietary email protocols, which make it impossible to use third party email apps. Please see [this FAQ](#user-content-faq129) for more information.
 
 Using your own (custom) domain name, which is supported by most email providers, will make it easier to switch to another email provider.
 
@@ -2265,7 +2282,7 @@ Directly after the first step new messages will be notified. However, only until
 
 Since there is no guarantee that a message text will always be fetched directly after a message header, it is not possible to guarantee that a new message notification with a preview text will always be sent to a wearable.
 
-Если вы думаете, что это достаточно хорошо, вы можете включить опцию уведомления *Отправлять уведомления только с предпросмотром сообщений на носимые устройства* и если это не работает, вы можете включить опцию уведомлений *Показывать уведомления только с текстом предварительного просмотра*.
+If you think this is good enough, you can enable the notification option *Only send notifications with a message preview to wearables* and if this does not work, you can try to enable the notification option *Show notifications with a preview text only*.
 
 If you want to have the full message text sent to your wearable, you can enable the notification option *Preview all text*. Note that some wearables are known to crash with this option enabled.
 
@@ -2483,7 +2500,7 @@ Version 1.1082 added a local trash folder. Note that trashing a message will per
 
 To record voice notes you can press this icon in the bottom action bar of the message composer:
 
-![External image](https://raw.githubusercontent.com/google/material-design-icons/master/action/1x_web/ic_record_voice_over_black_48dp.png)
+![External image](https://github.com/M66B/FairEmail/blob/master/images/baseline_record_voice_over_black_48dp.png)
 
 This requires a compatible audio recorder app to be installed. In particular [this common intent](https://developer.android.com/reference/android/provider/MediaStore.Audio.Media.html#RECORD_SOUND_ACTION) needs to be supported.
 
@@ -2536,7 +2553,7 @@ This will not change the time of already synchronized messages. To solve this, l
 
 You likely came here because you are using a third party build of FairEmail.
 
-**Поддерживается только** последняя версия Play Store, последняя версия GitHub и сборка F-Droid, но **только если** номер версии сборки F-Droid совпадает с номером версии последнего релиза GitHub.
+There is **only support** on the latest Play store version, the latest GitHub release and the F-Droid build, but **only if** the version number of the F-Droid build is the same as the version number of the latest GitHub release.
 
 F-Droid builds irregularly, which can be problematic when there is an important update. Therefore you are advised to switch to the GitHub release.
 

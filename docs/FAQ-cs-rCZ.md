@@ -1,6 +1,6 @@
 # FairEmail podpora
 
-Máte-li dotaz, podívejte se prosím nejprve na často kladené otázky. Ve spodní části naleznete, jak pokládat další otázky, žádat o funkce a hlásit chyby.
+Máte-li dotaz, nejprve se prosím podívejte na často kladené dotazy (FAQ). Ve spodní části se dozvíte, jak pokládat další dotazy, žádat o nové funkce a hlásit chyby.
 
 ## Obsah
 
@@ -26,7 +26,7 @@ Pro autorizaci:
 
 * Gmail / G suite, viz [otázka č. 6](#user-content-faq6)
 * Outlook / Live / Hotmail, viz [otázka č. 14](#user-content-faq14)
-* Office 365, see [question 14](#user-content-faq156)
+* Office 365, viz [otázka č. 14](#user-content-faq156)
 * Microsoft Exchange, viz [otázka č. 8](#user-content-faq8)
 * Yahoo, AOL a Sky, viz [otázka č. 88](#user-content-faq88)
 * Apple iCloud, viz [otázka č. 148](#user-content-faq148)
@@ -56,7 +56,7 @@ Související dotazy:
 * Odebrání účtu/identity: Nastavení, krok 1/2, Spravovat, stiskněte účet/identitu, menu (3 tečky), Smazat
 * Odstranění složky: dlouze podržte složku v seznamu složek, Upravit vlastnosti, menu (3 tečky), Smazat
 * Vrácení zpět odeslání: složka K odeslání, stiskněte zprávu, stiskněte tlačítko s ikonou šipky zpět
-* Ukládání odeslaných zpráv v doručených: přečtěte si prosím [tyto nejčastější otázky](#user-content-faq142)
+* Ukládání odeslaných zpráv v doručených: přečtěte si prosím [tyto nejčastější dotazy](#user-content-faq142)
 * Změna systémových složek: Nastavení, krok 1, Spravovat, stiskněte účet, sjeďte úplně dolů
 * Export/import nastavení: Nastavení, navigační (hamburger) menu
 
@@ -75,99 +75,99 @@ Související dotazy:
 * ~~[Chyba v AndroidX](https://issuetracker.google.com/issues/64729576) ztěžuje uchopení posuvníku pro rychlý posun. Bylo přidáno provizorní řešení.~~
 * ~~Šifrování s YubiKey vyústí v nekonečnou smyčku. Toto je zdá se způsobeno [chybou v OpenKeychain](https://github.com/open-keychain/open-keychain/issues/2507).~~
 * Posun na interně odkazovanou pozici v původních zprávách nefunguje. Toto nelze opravit, protože zobrazení původní zprávy je uvnitř posuvného náhledu.
-* Náhled textu zprávy se na Samsung hodinkách někdy (nikdy) nezobrazí, protože [setLocalOnly](https://developer.android.com/reference/androidx/core/app/NotificationCompat.Builder.html#setLocalOnly(boolean)) se zdá být ignorován. Message preview texts are known to be displayed correctly on Pebble 2, Fitbit Charge 3, and Mi band 3 wearables. See also [this FAQ](#user-content-faq126).
+* Náhled textu zprávy se na Samsung hodinkách někdy (nikdy) nezobrazí, protože [setLocalOnly](https://developer.android.com/reference/androidx/core/app/NotificationCompat.Builder.html#setLocalOnly(boolean)) se zdá být ignorován. Message preview texts are known to be displayed correctly on Pebble 2, Fitbit Charge 3, and Mi band 3 wearables. Viz také [tento nejčastější dotaz](#user-content-faq126).
 
 ## Plánované funkce
 
-* ~~Synchronize on demand (manual)~~
-* ~~Semi-automatic encryption~~
-* ~~Copy message~~
-* ~~Colored stars~~
-* ~~Notification settings per folder~~
+* ~~Synchronizace na vyžádání (ručně)~~
+* ~~Poloautomatické šifrování~~
+* ~~Kopírování zprávy~~
+* ~~Barevné hvězdičky~~
+* ~~Nastavení oznámení pro každou složku~~
 * ~~Select local images for signatures~~ (this will not be added because it requires image file management and because images are not shown by default in most email clients anyway)
-* ~~Show messages matched by a rule~~
+* ~~Zobrazení zpráv odpovídajících pravidlu~~
 * ~~[ManageSieve](https://tools.ietf.org/html/rfc5804)~~ (there are no maintained Java libraries with a suitable license and without dependencies and besides that, FairEmail has its own filter rules)
-* ~~Search for messages with/without attachments~~ (this cannot be added because IMAP doesn't support searching for attachments)
-* ~~Search for a folder~~ (filtering a hierarchical folder list is problematic)
-* ~~Search suggestions~~
+* ~~Vyhledávání zpráv s/bez příloh~~ (nelze přidat, neboť IMAP nepodporuje hledání příloh)
+* ~~Vyhledání složky~~ (filtrování hierarchického seznamu složek je problematické)
+* ~~Návrhy vyhledávání~~
 * ~~[Autocrypt Setup Message](https://autocrypt.org/autocrypt-spec-1.0.0.pdf) (section 4.4)~~ (IMO it is not a good idea to let an email client handle sensitive encryption keys for an exceptional use case while OpenKeychain can export keys too)
-* ~~Generic unified folders~~
+* ~~Obecné sjednocené složky~~
 * ~~New per account message notification schedules~~ (implemented by adding a time condition to rules so messages can be snoozed during selected periods)
-* ~~Copy accounts and identities~~
-* ~~Pinch zoom~~ (not reliably possible in a scrolling list; the full message view can be zoomed instead)
-* ~~More compact folder view~~
+* ~~Kopírování účtů a identit~~
+* ~~Přiblížení roztažením prstů~~ (v posuvném seznamu spolehlivě nelze; namísto toho lze přibližovat zobrazení celé zprávy)
+* ~~Kompaktnější pohled na složky~~
 * ~~Compose lists and tables~~ (this requires a rich text editor, see [this FAQ](#user-content-faq99))
-* ~~Pinch zoom text size~~
-* ~~Display GIFs~~
-* ~~Themes~~ (a grey light and dark theme were added because this is what most people seems to want)
-* ~~Any day time condition~~ (any day doesn't really fit into the from/to date/time condition)
-* ~~Send as attachment~~
-* ~~Widget for selected account~~
-* ~~Remind to attach files~~
-* ~~Select domains to show images for~~ (this will be too complicated to use)
-* ~~Unified starred messages view~~ (there is already a special search for this)
-* ~~Move notification action~~
-* ~~S/MIME support~~
-* ~~Search for settings~~
+* ~~Zvětšení textu roztažením prstů~~
+* ~~Zobrazení GIFů~~
+* ~~Motivy~~ (šedý světlý a tmavý motiv byly přidány, protože jak se zdá, toto je co většina lidí chce)
+* ~~Podmínka pro nespecifikovaný den čas~~ (libovolný den se do podmínky z/do data/času úplně nehodí)
+* ~~Odeslání jako přílohy~~
+* ~~Widget pro vybraný účet~~
+* ~~Připomenutí pro přiložení souborů~~
+* ~~Výběr domén ze kterých zobrazovat obrázky~~ (bude příliš složité na používání)
+* ~~Sjednocený pohled na zprávy s hvězdičkou~~ (pro toto již existuje speciální vyhledávání)
+* ~~Akce oznámení pro přesun~~
+* ~~S/MIME podpora~~
+* ~~Vyhledávání pro nastavení~~
 
-Anything on this list is in random order and *might* be added in the near future.
+Cokoli na tomto seznamu je v náhodném pořadí a *může* být přidáno v blízké budoucnosti.
 
 ## Často požadované funkce
 
-The design is based on many discussions and if you like you can discuss about it [in this forum](https://forum.xda-developers.com/android/apps-games/source-email-t3824168) too. The goal of the design is to be minimalistic (no unnecessary menus, buttons, etc) and non distracting (no fancy colors, animations, etc). All displayed things should be useful in one or another way and should be carefully positioned for easy usage. Fonts, sizes, colors, etc should be material design whenever possible.
+Design je založen na mnoha diskuzích a pokud chcete, můžete se do diskuze zapojit i vy [na tomto fóru](https://forum.xda-developers.com/android/apps-games/source-email-t3824168). Cílem designu je být minimalistický (žádné zbytečné nabídky, tlačítka, apod.) a nerozptylující (žádné úžasné barvy, animace, apod.). Všechny zobrazené prvky by měly být nějakým způsobem užitečné a měly by být umisťovány s citem pro snadné používání. Písma, velikosti, barvy, apod. by měly odpovídat material designu, kdykoli je to možné.
 
 ## Často kladené dotazy
 
-* [(1) Which permissions are needed and why?](#user-content-faq1)
-* [(2) Why is there a permanent notification shown?](#user-content-faq2)
-* [(3) What are operations and why are they pending?](#user-content-faq3)
-* [(4) How can I use an invalid security certificate / empty password / plain text connection?](#user-content-faq4)
-* [(5) How can I customize the message view?](#user-content-faq5)
-* [(6) How can I login to Gmail / G suite?](#user-content-faq6)
-* [(7) Why are sent messages not appearing (directly) in the sent folder?](#user-content-faq7)
-* [(8) Can I use a Microsoft Exchange account?](#user-content-faq8)
-* [(9) What are identities / how do I add an alias?](#user-content-faq9)
-* [~~(11) Why is POP not supported?~~](#user-content-faq11)
-* [~~(10) What does 'UIDPLUS not supported' mean?~~](#user-content-faq10)
-* [(12) How does encryption/decryption work?](#user-content-faq12)
-* [(13) How does search on device/server work?](#user-content-faq13)
-* [(14) How can I set up an Outlook / Live / Hotmail account?](#user-content-faq14)
-* [(15) Why does the message text keep loading?](#user-content-faq15)
-* [(16) Why are messages not being synchronized?](#user-content-faq16)
-* [~~(17) Why does manual synchronize not work?~~](#user-content-faq17)
-* [(18) Why is the message preview not always shown?](#user-content-faq18)
-* [(19) Why are the pro features so expensive?](#user-content-faq19)
-* [(20) Can I get a refund?](#user-content-faq20)
-* [(21) How do I enable the notification light?](#user-content-faq21)
+* [(1) Jaká oprávnění jsou potřebná a proč?](#user-content-faq1)
+* [(2) Proč je zobrazeno permanentní oznámení?](#user-content-faq2)
+* [(3) Co jsou operace a proč probíhají?](#user-content-faq3)
+* [(4) Jak mohu použít neplatný bezpečnostní certifikát / prázdné heslo / prosté textové připojení?](#user-content-faq4)
+* [(5) Jak přizpůsobím zobrazení zpráv?](#user-content-faq5)
+* [(6) Jak se přihlásím k Gmail / G Suite?](#user-content-faq6)
+* [(7) Proč se odeslané zprávy nezobrazí (přímo) ve složce odeslané?](#user-content-faq7)
+* [(8) Mohu použít účet Microsoft Exchange?](#user-content-faq8)
+* [(9) Co jsou identity / jak přidám alias?](#user-content-faq9)
+* [~~(11) Proč není POP podporován?~~](#user-content-faq11)
+* [~~(10) Co znamená "UIDPLUS not supported"?~~](#user-content-faq10)
+* [(12) Jak funguje šifrování/dešifrování?](#user-content-faq12)
+* [(13) Jak funguje vyhledávání na zařízení/serveru?](#user-content-faq13)
+* [(14) Jak nastavím účet Outlook / Live / Hotmail?](#user-content-faq14)
+* [(15) Proč se text zprávy stále načítá?](#user-content-faq15)
+* [(16) Proč se zprávy nesynchronizují?](#user-content-faq16)
+* [~~(17) Proč ruční synchronizace nefunguje?~~](#user-content-faq17)
+* [(18) Proč se náhled zprávy ne vždy zobrazuje?](#user-content-faq18)
+* [(19) Proč jsou Pro funkce tak drahé?](#user-content-faq19)
+* [(20) Mohu získat vrácení peněz?](#user-content-faq20)
+* [(21) Jak povolím oznamovací LED?](#user-content-faq21)
 * [(22) What does account/folder error ... mean?](#user-content-faq22)
-* [(23) Why do I get alert .. ?](#user-content-faq23)
-* [(24) What is browse messages on the server?](#user-content-faq24)
-* [(25) Why can't I select/open/save an image, attachment or a file?](#user-content-faq25)
-* [(26) Can I help to translate FairEmail in my own language?](#user-content-faq26)
-* [(27) How can I distinguish between embedded and external images?](#user-content-faq27)
-* [(28) How can I manage status bar notifications?](#user-content-faq28)
-* [(29) How can I get new message notifications for other folders?](#user-content-faq29)
+* [(23) Proč dostávám upozornění… ?](#user-content-faq23)
+* [(24) Co znamená, procházení zpráv na serveru?](#user-content-faq24)
+* [(25) Proč nemohu vybrat/otevřít/uložit obrázek, přílohu nebo soubor?](#user-content-faq25)
+* [(26) Mohu pomoci s překladem FairEmailu do svého vlastního jazyka?](#user-content-faq26)
+* [(27) Jak odliším vložené obrázky od externích?](#user-content-faq27)
+* [(28) Jak mohu spravovat oznámení ve stavové liště?](#user-content-faq28)
+* [(29) Jak získám oznámení pro nové zprávy z ostatních složek?](#user-content-faq29)
 * [(30) How can I use the provided quick settings?](#user-content-faq30)
 * [(31) How can I use the provided shortcuts?](#user-content-faq31)
-* [(32) How can I check if reading email is really safe?](#user-content-faq32)
+* [(32) Jak ověřím, že čtení e-mailu je skutečně bezpečné?](#user-content-faq32)
 * [(33) Why are edited sender addresses not working?](#user-content-faq33)
 * [(34) How are identities matched?](#user-content-faq34)
-* [(35) Why should I be careful with viewing images, attachments, and the original message?](#user-content-faq35)
-* [(36) How are settings files encrypted?](#user-content-faq36)
-* [(37) How are passwords stored?](#user-content-faq37)
-* [(39) How can I reduce the battery usage of FairEmail?](#user-content-faq39)
-* [(40) How can I reduce the network usage of FairEmail?](#user-content-faq40)
-* [(41) How can I fix the error 'Handshake failed' ?](#user-content-faq41)
-* [(42) Can you add a new provider to the list of providers?](#user-content-faq42)
+* [(35) Proč bych měl být opatrný při prohlížení obrázků, příloh a původních zpráv?](#user-content-faq35)
+* [(36) Jak jsou soubory nastavení šifrovány?](#user-content-faq36)
+* [(37) Jak jsou ukládána hesla?](#user-content-faq37)
+* [(39) Jak mohu snížit spotřebu baterie FairEmailem?](#user-content-faq39)
+* [(40) Jak mohu snížit datovou náročnost FairEmailu?](#user-content-faq40)
+* [(41) Jak opravím chybu 'Handshake failed' ?](#user-content-faq41)
+* [(42) Můžete na seznam poskytovatelů přidat nového poskytovatele?](#user-content-faq42)
 * [(43) Can you show the original ... ?](#user-content-faq43)
 * [(44) Can you show contact photos / identicons in the sent folder?](#user-content-faq44)
 * [(45) How can I fix 'This key is not available. To use it, you must import it as one of your own!' ?](#user-content-faq45)
-* [(46) Why does the message list keep refreshing?](#user-content-faq46)
+* [(46) Proč se seznam zpráv stále obnovuje?](#user-content-faq46)
 * [(47) How do I solve the error 'No primary account or no drafts folder' ?](#user-content-faq47)
 * [~~(48) How do I solve the error 'No primary account or no archive folder' ?~~](#user-content-faq48)
 * [(49) How do I fix 'An outdated app sent a file path instead of a file stream' ?](#user-content-faq49)
 * [(50) Can you add an option to synchronize all messages?](#user-content-faq50)
-* [(51) How are folders sorted?](#user-content-faq51)
+* [(51) Jak jsou složky řazeny?](#user-content-faq51)
 * [(52) Why does it take some time to reconnect to an account?](#user-content-faq52)
 * [(53) Can you stick the message action bar to the top/bottom?](#user-content-faq53)
 * [~~(54) How do I use a namespace prefix?~~](#user-content-faq54)
@@ -176,15 +176,15 @@ The design is based on many discussions and if you like you can discuss about it
 * [~~(57) Can I use HTML in signatures?~~](#user-content-faq57)
 * [(58) What does an open/closed email icon mean?](#user-content-faq58)
 * [(59) Can original messages be opened in the browser?](#user-content-faq59)
-* [(60) Did you known ...?](#user-content-faq60)
-* [(61) Why are some messages shown dimmed?](#user-content-faq61)
-* [(62) Which authentication methods are supported?](#user-content-faq62)
+* [(60) Věděl jste, že ...?](#user-content-faq60)
+* [(61) Proč jsou některé zprávy zobrazeny zašedlé?](#user-content-faq61)
+* [(62) Které metody ověřování jsou podporovány?](#user-content-faq62)
 * [(63) How are images resized for displaying on screens?](#user-content-faq63)
 * [~~(64) Can you add custom actions for swipe left/right?~~](#user-content-faq64)
-* [(65) Why are some attachments shown dimmed?](#user-content-faq65)
+* [(65) Proč jsou některé přílohy zobrazeny zašedlé?](#user-content-faq65)
 * [(66) Is FairEmail available in the Google Play Family Library?](#user-content-faq66)
-* [(67) How can I snooze conversations?](#user-content-faq67)
-* [~~(68) Why can Adobe Acrobat reader not open PDF attachments / Microsoft apps not open attached documents?~~](#user-content-faq68)
+* [(67) Jak odložím konverzaci?](#user-content-faq67)
+* [~~(68) Proč Adobe Acrobat Reader nemůže otevírat PDF přílohy / Microsoft aplikace nemohou otevírat přiložené dokumenty?~~](#user-content-faq68)
 * [(69) Can you add auto scroll up on new message?](#user-content-faq69)
 * [(70) When will messages be auto expanded?](#user-content-faq70)
 * [(71) How do I use filter rules?](#user-content-faq71)
@@ -211,24 +211,24 @@ The design is based on many discussions and if you like you can discuss about it
 * [(93) Can you allow installation/data storage on external storage media (sdcard)?](#user-content-faq93)
 * [(94) What does the red/orange stripe at the end of the header mean?](#user-content-faq94)
 * [(95) Why are not all apps shown when selecting an attachment or image?](#user-content-faq95)
-* [(96) Where can I find the IMAP and SMTP settings?](#user-content-faq96)
-* [(97) What is 'cleanup' ?](#user-content-faq97)
-* [(98) Why can I still pick contacts after revoking contacts permissions?](#user-content-faq98)
-* [(99) Can you add a rich text or markdown editor?](#user-content-faq99)
-* [(100) How can I synchronize Gmail categories?](#user-content-faq100)
-* [(101) What does the blue/orange dot at the bottom of the conversations mean?](#user-content-faq101)
-* [(102) How can I enable auto rotation of images?](#user-content-faq102)
-* [(103) How can I record audio?](#user-content-faq103)
-* [(104) What do I need to know about error reporting?](#user-content-faq104)
-* [(105) How does the roam-like-at-home option work?](#user-content-faq105)
-* [(106) Which launchers can show a badge count with the number of unread messages?](#user-content-faq106)
-* [(107) How do I used colored stars?](#user-content-faq107)
+* [(96) Kde najdu nastavení IMAP a SMTP?](#user-content-faq96)
+* [(97) Co je to „úklid“?](#user-content-faq97)
+* [(98) Proč mohu stále vybírat kontakty i po odvolání oprávnění pro kontakty?](#user-content-faq98)
+* [(99) Můžete přidat editor formátovaného textu nebo markdown?](#user-content-faq99)
+* [(100) Jak mohu synchronizovat Gmail kategorie?](#user-content-faq100)
+* [(101) Co znamená modrá/oranžová tečka na konci konverzací?](#user-content-faq101)
+* [(102) Jak povolím automatické otáčení obrázků?](#user-content-faq102)
+* [(103) Jak mohu nahrávat zvuk?](#user-content-faq103)
+* [(104) Co potřebuji vědět o hlášení chyb?](#user-content-faq104)
+* [(105) Jak funguje volba roaming jako doma (RLAH)?](#user-content-faq105)
+* [(106) Které spouštěče aplikací umí zobrazit odznáček s počtem nepřečtených zpráv?](#user-content-faq106)
+* [(107) How do I use colored stars?](#user-content-faq107)
 * [(108) Can you add permanently delete messages from any folder?](#user-content-faq108)
 * [~~(109) Why is 'select account' available in official versions only?~~](#user-content-faq109)
 * [(110) Why are (some) messages empty and/or attachments corrupted?](#user-content-faq110)
-* [(111) Is OAuth supported?](#user-content-faq111)
-* [(112) Which email provider do you recommend?](#user-content-faq112)
-* [(113) How does biometric authentication work?](#user-content-faq113)
+* [(111) Je podporován OAuth?](#user-content-faq111)
+* [(112) Kterého poskytovatele doporučujete?](#user-content-faq112)
+* [(113) Jak funguje biometrické ověřování?](#user-content-faq113)
 * [(114) Can you add an import for the settings of other email apps?](#user-content-faq114)
 * [(115) Can you add email address chips?](#user-content-faq115)
 * [~~(116) How can I show images in messages from trusted senders by default?~~](#user-content-faq116)
@@ -244,11 +244,11 @@ The design is based on many discussions and if you like you can discuss about it
 * [(126) Can message previews be sent to my wearable?](#user-content-faq126)
 * [(127) How can I fix 'Syntactically invalid HELO argument(s)'?](#user-content-faq127)
 * [(128) How can I reset asked questions, for example to show images?](#user-content-faq128)
-* [(129) Are ProtonMail, Tutanota supported?](#user-content-faq129)
+* [(129) Jsou ProtonMail, Tutanota podporovány?](#user-content-faq129)
 * [(130) What does message error ... mean?](#user-content-faq130)
 * [(131) Can you change the direction for swiping to previous/next message?](#user-content-faq131)
 * [(132) Why are new message notifications silent?](#user-content-faq132)
-* [(133) Why is ActiveSync not supported?](#user-content-faq133)
+* [(133) Proč není ActiveSync podporován?](#user-content-faq133)
 * [(134) Can you add deleting local messages?](#user-content-faq134)
 * [(135) Why are trashed messages and drafts shown in conversations?](#user-content-faq135)
 * [(136) How can I delete an account/identity/folder?](#user-content-faq136)
@@ -259,7 +259,7 @@ The design is based on many discussions and if you like you can discuss about it
 * [(141) How can I fix 'A drafts folder is required to send messages'?](#user-content-faq141)
 * [(142) How can I store sent messages in the inbox?](#user-content-faq142)
 * [~~(143) Can you add a trash folder for POP3 accounts?~~](#user-content-faq143)
-* [(144) How can I record voice notes?](#user-content-faq144)
+* [(144) Jak nahraji hlasové poznámky?](#user-content-faq144)
 * [(145) How can I set a notification sound for an account, folder or sender?](#user-content-faq145)
 * [(146) How can I fix incorrect message times?](#user-content-faq146)
 * [(147) What should I know about third party versions?](#user-content-faq147)
@@ -267,19 +267,19 @@ The design is based on many discussions and if you like you can discuss about it
 * [(149) How does the unread message count widget work?](#user-content-faq149)
 * [(150) Can you add cancelling calendar invites?](#user-content-faq150)
 * [(151) Can you add backup/restore of messages?](#user-content-faq151)
-* [(152) How can I insert a contact group?](#user-content-faq152)
+* [(152) Jak přidám skupinu kontaktů?](#user-content-faq152)
 * [(153) Why does permanently deleting Gmail message not work?](#user-content-faq153)
 * [~~(154) Can you add favicons as contact photos?~~](#user-content-faq154)
-* [(155) What is a winmail.dat file?](#user-content-faq155)
+* [(155) Co je winmail.dat soubor?](#user-content-faq155)
 * [(156) How can I set up an Office 365 account?](#user-content-faq156)
 * [(157) How can I set up an Free.fr account?](#user-content-faq157)
 * [(158) Which camera / audio recorder do you recommend?](#user-content-faq158)
 * [(159) What are Disconnect's tracker protection lists?](#user-content-faq159)
 
-[I have another question.](#user-content-support)
+[Mám jiný dotaz.](#user-content-support)
 
 <a name="faq1"></a>
-**(1) Which permissions are needed and why?**
+**(1) Jaká oprávnění jsou potřebná a proč?**
 
 The following Android permissions are needed:
 
@@ -322,7 +322,7 @@ FairEmail will keep a list of addresses you receive messages from and send messa
 <br />
 
 <a name="faq2"></a>
-**(2) Why is there a permanent notification shown?**
+**(2) Proč je zobrazeno permanentní oznámení?**
 
 A low priority permanent status bar notification with the number of accounts being monitored and the number of operations pending (see the next question) is shown to prevent Android from killing the service that takes care of continuous receiving email. This was [already necessary](https://developer.android.com/reference/android/app/Service.html#startForeground(int,%20android.app.Notification)), but with the introduction of [doze mode](https://developer.android.com/training/monitoring-device-state/doze-standby) in Android 6 Marshmallow this is more than ever necessary. Doze mode will stop all apps when the screen is off for some time, unless the app did start a foreground service, which requires showing a status bar notification.
 
@@ -332,7 +332,7 @@ Android shows icons of high priority status bar notifications first and will hid
 
 The status bar notification can be disabled via the notification settings of FairEmail:
 
-* Android 8 Oreo and later: tap the *Service channel* button and disable the notification channel via the Android settings
+* Android 8 Oreo and later: tap the *Receive channel* button and disable the channel via the Android settings (this won't disable new message notifications)
 * Android 7 Nougat and before: enabled *Use background service to synchronize messages*, but be sure to read the remark below the setting
 
 You can switch to periodically synchronization of messages in the receive settings to remove the notification, but be aware that this might use more battery power. See [here](#user-content-faq39) for more details about battery usage.
@@ -346,7 +346,7 @@ If you came here by clicking on the notification, you should know that the next 
 <br />
 
 <a name="faq3"></a>
-**(3) What are operations and why are they pending?**
+**(3) Co jsou operace a proč probíhají?**
 
 The low priority status bar notification shows the number of pending operations, which can be:
 
@@ -371,12 +371,12 @@ The low priority status bar notification shows the number of pending operations,
 * *exists*: check if message exists
 * *rule*: execute rule on body text
 
-Operations are processed only when there is a connection to the email server or when manually synchronizing. See also [this FAQ](#user-content-faq16).
+Operations are processed only when there is a connection to the email server or when manually synchronizing. Viz také [tento nejčastější dotaz](#user-content-faq16).
 
 <br />
 
 <a name="faq4"></a>
-**(4) How can I use an invalid security certificate / empty password / plain text connection?**
+**(4) Jak mohu použít neplatný bezpečnostní certifikát / prázdné heslo / prosté textové připojení?**
 
 *... Untrusted ... not in certificate ...*
 <br />
@@ -491,7 +491,7 @@ See [here](https://support.google.com/mail/answer/7126229) for Google's instruct
 <br />
 
 <a name="faq7"></a>
-**(7) Why are sent messages not appearing (directly) in the sent folder?**
+**(7) Proč se odeslané zprávy nezobrazí (přímo) ve složce odeslané?**
 
 Sent messages are normally moved from the outbox to the sent folder as soon as your provider adds sent messages to the sent folder. This requires a sent folder to be selected in the account settings and the sent folder to be set to synchronizing.
 
@@ -510,7 +510,7 @@ You can use a Microsoft Exchange account if it is accessible via IMAP, which is 
 
 Please see [here](https://support.office.com/en-us/article/pop-imap-and-smtp-settings-for-outlook-com-d088b986-291d-42b8-9564-9c414e2aa040) for the Microsoft documentation about configuring an email client. There is also a section about common connection errors and solutions.
 
-Some older Exchange server versions have a bug causing empty message and corrupt attachments. Pro provizorní řešení se prosím podívejte na [tento FAQ](#user-content-faq110).
+Some older Exchange server versions have a bug causing empty message and corrupt attachments. Pro provizorní řešení se prosím podívejte na [tento nejčastější dotaz](#user-content-faq110).
 
 Please see [this FAQ](#user-content-faq133) about ActiveSync support.
 
@@ -596,7 +596,7 @@ You'll need to install and configure [OpenKeychain](https://f-droid.org/en/packa
 
 **Important**: on some Android versions / devices it is necessary to enable *Show popups while running in background* in the additional permissions of the Android app settings of the OpenKeychain app. Without this permission the draft will be saved, but the OpenKeychain popup to confirm/select might not appear.
 
-FairEmail will send the [Autocrypt](https://autocrypt.org/) headers for use by other email clients and send received Autocrypt headers to the OpenKeychain app for storage.
+FairEmail will send the [Autocrypt](https://autocrypt.org/) header for use by other email clients, but only for signed and encrypted messages because too many email servers have problems with the often long Autocrypt header. Note that the most secure way to start an encrypted email exchange is by sending signed messages first. Received Autocrypt headers will be sent to the OpenKeychain app for storage on verifying a signature or decrypting a message.
 
 All key handling is delegated to the OpenKey chain app for security reasons. This also means that FairEmail does not store PGP keys.
 
@@ -612,6 +612,7 @@ Signed-only messages are supported, encrypted-only messages are not supported.
 
 Common errors:
 
+* *No key*: there is no PGP key available for one of the listed email addresses
 * *Missing key for encryption*: there is probably a key selected in FairEmail that does not exist in the OpenKeychain app anymore. Resetting the key (see above) will probably fix this problem.
 
 *S/MIME*
@@ -630,7 +631,7 @@ Public keys are stored by FairEmail and can be imported when verifying a signatu
 
 FairEmail verifies both the signature and the complete certificate chain.
 
-Common errors:
+Obvyklé chyby:
 
 * *No certificate found matching targetContraints*: this likely means you are using an old version of FairEmail
 * *unable to find valid certification path to requested target*: basically this means one or more intermediate or root certificates were not found
@@ -694,7 +695,21 @@ This means that searching for a message text requires that files containing the 
 
 In the *miscellaneous settings* you can enable *Build search index* to significantly increase the speed of searching on the device, but be aware that this will increase battery and storage space usage. The search index is based on words, so searching for partial text is not possible. Searching using the search index is by default AND, so searching for *apple orange* will search for apple AND orange. Words separated by commas result in searching for OR, so for example *apple, orange* will search for apple OR orange. Both can be combined, so searching for *apple, orange banana* will search for apple OR (orange AND banana). Using the search index is a pro feature.
 
-Searching messages on the device is a free feature, searching messages on the server is a pro feature.
+From version 1.1315 it is possible to use search expressions like this:
+
+```
+apple +banana -cherry ?nuts
+```
+
+This will result in searching like this:
+
+```
+("apple" AND "banana" AND NOT "cherry") OR "nuts"
+```
+
+Search expressions can be used for searching on the device via the search index and for searching on the email server, but not for searching on the device without search index for performance reasons.
+
+Searching on the device is a free feature, using the search index and searching on the server is a pro feature.
 
 <br />
 
@@ -946,6 +961,8 @@ Alternatively, you might be able to enable the *Files* app again using the Andro
 
 Yes, you can translate the texts of FairEmail in your own language [on Crowdin](https://crowdin.com/project/open-source-email). Registration is free.
 
+If you would like your name or alias to be included in the list of contributors in *About* the app, please [contact me](https://contact.faircode.eu/?product=fairemailsupport).
+
 <br />
 
 <a name="faq27"></a>
@@ -953,15 +970,15 @@ Yes, you can translate the texts of FairEmail in your own language [on Crowdin](
 
 External image:
 
-![External image](https://raw.githubusercontent.com/google/material-design-icons/master/image/1x_web/ic_image_black_48dp.png)
+![External image](https://github.com/M66B/FairEmail/blob/master/images/baseline_image_black_48dp.png)
 
 Embedded image:
 
-![Embedded image](https://raw.githubusercontent.com/google/material-design-icons/master/image/1x_web/ic_photo_library_black_48dp.png)
+![Embedded image](https://github.com/M66B/FairEmail/blob/master/images/baseline_photo_library_black_48dp.png)
 
 Broken image:
 
-![Broken image](https://raw.githubusercontent.com/google/material-design-icons/master/image/1x_web/ic_broken_image_black_48dp.png)
+![Broken image](https://github.com/M66B/FairEmail/blob/master/images/baseline_broken_image_black_48dp.png)
 
 Note that downloading external images from a remote server can be used to record you did see a message, which you likely don't want if the message is spam or malicious.
 
@@ -1369,11 +1386,11 @@ There are almost no providers offering the [JMAP](https://jmap.io/) protocol, so
 
 The email icon in the folder list can be open (outlined) or closed (solid):
 
-![External image](https://raw.githubusercontent.com/google/material-design-icons/master/communication/1x_web/ic_mail_outline_black_48dp.png)
+![External image](https://github.com/M66B/FairEmail/blob/master/images/baseline_mail_outline_black_48dp.png)
 
 Message bodies and attachments are not downloaded by default.
 
-![External image](https://raw.githubusercontent.com/google/material-design-icons/master/communication/1x_web/ic_email_black_48dp.png)
+![External image](https://github.com/M66B/FairEmail/blob/master/images/baseline_email_black_48dp.png)
 
 Message bodies and attachments are downloaded by default.
 
@@ -1748,7 +1765,7 @@ Please see [here](https://en.wikipedia.org/wiki/Web_beacon) about what a trackin
 
 FairEmail will in most cases automatically recognize tracking images and replace them by this icon:
 
-![External image](https://raw.githubusercontent.com/google/material-design-icons/master/maps/1x_web/ic_my_location_black_48dp.png)
+![External image](https://github.com/M66B/FairEmail/blob/master/images/baseline_my_location_black_48dp.png)
 
 Automatic recognition of tracking images can be disabled in the privacy settings.
 
@@ -2483,7 +2500,7 @@ Version 1.1082 added a local trash folder. Note that trashing a message will per
 
 To record voice notes you can press this icon in the bottom action bar of the message composer:
 
-![External image](https://raw.githubusercontent.com/google/material-design-icons/master/action/1x_web/ic_record_voice_over_black_48dp.png)
+![External image](https://github.com/M66B/FairEmail/blob/master/images/baseline_record_voice_over_black_48dp.png)
 
 This requires a compatible audio recorder app to be installed. In particular [this common intent](https://developer.android.com/reference/android/provider/MediaStore.Audio.Media.html#RECORD_SOUND_ACTION) needs to be supported.
 
@@ -2701,10 +2718,10 @@ Only the latest Play store version and latest GitHub release are supported. This
 
 Requested features should:
 
-* be useful to most people
-* not complicate the usage of FairEmail
-* fit within the philosophy of FairEmail (privacy oriented, security minded)
-* comply with common standards (IMAP, SMTP, etc)
+* být užitečné pro většinu lidí
+* nekomplikovat používání FairEmailu
+* být v souladu s filozofií FairEmailu (zaměření na soukromí s ohledem na bezpečnost)
+* neporušovat společné standardy (IMAP, SMTP, apod.)
 
 Features not fulfilling these requirements will likely be rejected. This is also to keep maintenance and support in the long run feasible.
 
